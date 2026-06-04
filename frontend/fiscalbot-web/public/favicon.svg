@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" role="img" aria-label="ARGOS">
+  <defs>
+    <linearGradient id="g" x1="22" y1="12" x2="74" y2="84" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FDE68A"/>
+      <stop offset=".48" stop-color="#F59E0B"/>
+      <stop offset="1" stop-color="#8A5A08"/>
+    </linearGradient>
+  </defs>
+  <rect width="96" height="96" rx="18" fill="#07182D"/>
+  <circle cx="48" cy="48" r="37" fill="none" stroke="#F59E0B" stroke-width="1.8" opacity=".58"/>
+  <path d="M22 71 48 14l26 57-12-7-14-31-14 31-12 7Z" fill="url(#g)"/>
+  <path d="M17 57c8-11 19-17 31-17s23 6 31 17c-8 11-19 17-31 17S25 68 17 57Z" fill="#07182D" stroke="url(#g)" stroke-width="5" stroke-linejoin="round"/>
+  <circle cx="48" cy="57" r="13" fill="#07182D" stroke="url(#g)" stroke-width="5"/>
+  <circle cx="54" cy="50" r="4.2" fill="#fff"/>
+  <circle cx="48" cy="10" r="3.4" fill="#FDE68A"/>
+  <circle cx="24" cy="25" r="3.2" fill="#F8C873"/>
+  <circle cx="72" cy="25" r="3.2" fill="#F8C873"/>
+</svg>
