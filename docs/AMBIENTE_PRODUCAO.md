@@ -50,7 +50,7 @@ No static site do frontend:
 VITE_API_URL=https://sua-url-backend
 ```
 
-## Local sem conflito com FiscalBot
+## Ambiente Docker local
 
 O ambiente Docker local do ARGOS usa:
 

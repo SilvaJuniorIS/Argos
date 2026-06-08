@@ -13,21 +13,12 @@ def test_health_check() -> None:
     assert response.json() == {"status": "ok", "service": settings.app_name}
 
 
-def test_dashboard_page_loads() -> None:
+def test_root_returns_argos_metadata() -> None:
     response = client.get("/")
 
     assert response.status_code == 200
-    assert "ARGOS Dashboard" in response.text
-    assert "/api/v1/dashboard" in response.text
-
-
-def test_dashboard_endpoint_returns_cards_without_database() -> None:
-    response = client.get("/api/v1/dashboard")
-
-    assert response.status_code == 200
-    payload = response.json()
-    assert "cards" in payload
-    assert "total_contratos" in payload["cards"]
+    assert response.json()["service"] == settings.app_name
+    assert "inteligencia documental" in response.json()["description"]
 
 
 def test_run_seed_indisponivel_em_producao(monkeypatch) -> None:

@@ -3,37 +3,37 @@ import heroAsset from '../assets/hero.png'
 import ArgosLogo from '../components/brand/ArgosLogo'
 
 const indicators = [
-  { value: '87', label: 'score de risco', tone: 'text-amber-300' },
-  { value: '15d', label: 'vigencia critica', tone: 'text-cyan-200' },
-  { value: '42%', label: 'concentracao', tone: 'text-emerald-200' },
+  { value: 'ETP', label: 'planejamento', tone: 'text-amber-300' },
+  { value: 'TR', label: 'referencia', tone: 'text-cyan-200' },
+  { value: 'DOCX', label: 'papel timbrado', tone: 'text-emerald-200' },
 ]
 
 const signals = [
-  { type: 'Vigencia', finding: 'Ata expira em 7 dias', action: 'Priorizar renovacao', level: 'Critico' },
-  { type: 'Fornecedor', finding: 'Recorrencia acima da media', action: 'Revisar historico', level: 'Alerta' },
-  { type: 'Valor', finding: 'Crescimento mensal atipico', action: 'Abrir trilha', level: 'Monitorar' },
+  { type: 'Processo', finding: 'Dados essenciais preenchidos', action: 'Gerar minuta', level: 'Pronto' },
+  { type: 'Documento', finding: 'Campos pendentes sinalizados', action: 'Revisar texto', level: 'Revisao' },
+  { type: 'Institucional', finding: 'Brasao e rodape aplicados', action: 'Exportar DOCX', level: 'Padrao' },
 ]
 
 const modules = [
   {
-    title: 'Gestao contratual',
-    text: 'Contratos, atas, anexos, vigencias, fiscais, gestores e fornecedores organizados em uma unica base operacional.',
+    title: 'Processos preparatorios',
+    text: 'Cadastro guiado dos dados da contratacao, itens, quantidades, prazo, modalidade e contexto institucional.',
   },
   {
-    title: 'Alertas preventivos',
-    text: 'Sinais de vencimento, risco documental e acompanhamento por secretaria antes que o problema vire urgencia.',
+    title: 'Modelos documentais',
+    text: 'Prompts orientados por modelos reais de ETP, Termo de Referencia e minuta de edital.',
   },
   {
-    title: 'Inteligencia documental',
-    text: 'Apoio de IA para estruturar ETP, Termo de Referencia e minutas revisaveis, sem tirar o controle da equipe.',
+    title: 'Papel timbrado',
+    text: 'Dados do orgao, brasao, responsavel tecnico e rodape aplicados automaticamente no DOCX.',
   },
 ]
 
 const flow = [
   'Cadastrar processo',
-  'Gerar minuta',
+  'Escolher ETP, TR ou edital',
   'Revisar documento',
-  'Acompanhar alertas',
+  'Exportar DOCX timbrado',
 ]
 
 const evidence = [
@@ -83,17 +83,17 @@ export default function Vitrine() {
         <div className="relative mx-auto grid max-w-7xl gap-10 px-5 pb-20 pt-14 lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,1.05fr)] lg:items-center">
           <div className="max-w-3xl">
             <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#F8C873]">
-              Vigilancia inteligente em compras publicas
+              Inteligencia documental em compras publicas
             </p>
             <h1 className="mt-5 max-w-4xl text-5xl font-black leading-[0.96] tracking-normal text-white md:text-7xl">
               ARGOS
             </h1>
             <p className="mt-5 max-w-2xl text-xl font-semibold leading-8 text-cyan-100 md:text-2xl">
-              Plataforma para estruturar processos, gerar minutas e acompanhar contratos com alertas acionaveis.
+              Plataforma para estruturar processos, gerar minutas padronizadas e exportar documentos oficiais.
             </p>
             <p className="mt-5 max-w-2xl text-base leading-7 text-blue-100">
-              O Argos ajuda equipes publicas a sair de planilhas dispersas para um ciclo rastreavel de cadastro,
-              revisao documental, fiscalizacao e tomada de decisao.
+              O Argos ajuda equipes publicas a sair de modelos dispersos para um ciclo rastreavel de cadastro,
+              revisao documental, padronizacao institucional e tomada de decisao.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -115,8 +115,8 @@ export default function Vitrine() {
             <div className="rounded-lg border border-white/10 bg-[#081E38]">
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-5 py-4">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-cyan-200">Painel de vigilancia</p>
-                  <h2 className="mt-1 text-xl font-black text-white">Contratacoes sob observacao</h2>
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-cyan-200">Esteira documental</p>
+                  <h2 className="mt-1 text-xl font-black text-white">Minutas sob revisao</h2>
                 </div>
                 <span className="rounded-lg bg-emerald-400/15 px-3 py-2 text-xs font-black uppercase tracking-[0.12em] text-emerald-200">
                   Online
@@ -175,8 +175,8 @@ export default function Vitrine() {
             </h2>
           </div>
           <p className="max-w-3xl text-base leading-7 text-[#405B78]">
-            A vitrine resume o que ja esta no projeto: contratos, alertas, importacao, documentos, dashboard,
-            auditoria e geracao assistida de ETP e Termo de Referencia.
+            A vitrine resume o foco atual do projeto: processos preparatorios, ETP, TR, edital,
+            papel timbrado, revisao humana, auditoria e geracao assistida por IA.
           </p>
         </div>
 
@@ -195,7 +195,7 @@ export default function Vitrine() {
           <div>
             <p className="text-sm font-black uppercase tracking-[0.2em] text-[#1D4ED8]">Fluxo de trabalho</p>
             <h2 className="mt-3 max-w-2xl text-3xl font-black leading-tight md:text-4xl">
-              Do planejamento ao acompanhamento, sem perder a trilha.
+              Do planejamento ao documento oficial, sem perder a trilha.
             </h2>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               {flow.map((step, index) => (

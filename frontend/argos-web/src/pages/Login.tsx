@@ -33,7 +33,7 @@ export default function Login() {
         className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-xl"
       >
         <h1 className="text-2xl font-bold text-[#0A2342]">ARGOS</h1>
-        <p className="mt-1 text-sm text-slate-600">Fiscalizacao inteligente, clara e segura.</p>
+        <p className="mt-1 text-sm text-slate-600">Inteligencia documental para compras publicas.</p>
         <div className="mt-6 space-y-3">
           <input
             className="input"

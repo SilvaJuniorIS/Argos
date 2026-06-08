@@ -24,7 +24,8 @@ Se o backend estiver no Railway, Render, Fly.io ou outro host, use a URL publica
 
 O arquivo `frontend/argos-web/vercel.json` direciona rotas do app React para `index.html`, evitando erro 404 ao abrir URLs como:
 
-- `/contratos`
-- `/contratos/1`
-- `/contratos/novo`
-- `/importacao/contratos`
+- `/argos`
+- `/argos/processos/novo`
+- `/argos/processos/1`
+- `/argos/documentos/1`
+- `/argos/institucional`

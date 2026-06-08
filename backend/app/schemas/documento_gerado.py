@@ -3,7 +3,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-TipoDocumento = Literal["ETP", "TR"]
+TipoDocumento = Literal["ETP", "TR", "EDITAL"]
 
 
 class DocumentoGerarRequest(BaseModel):

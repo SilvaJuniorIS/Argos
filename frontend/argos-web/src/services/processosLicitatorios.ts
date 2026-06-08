@@ -1,6 +1,6 @@
 import api from './api'
 
-export type TipoDocumento = 'ETP' | 'TR'
+export type TipoDocumento = 'ETP' | 'TR' | 'EDITAL'
 
 export type ProcessoLicitatorio = {
   id: number

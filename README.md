@@ -2,7 +2,7 @@
 
 ARGOS e um produto da AtlasNex para apoiar equipes publicas na elaboracao inicial de documentos de contratacao com base na Lei 14.133/2021.
 
-O produto organiza dados de processos licitatorios, gera minutas de Estudo Tecnico Preliminar (ETP) e Termo de Referencia (TR) com apoio de IA, permite revisao humana no navegador e exporta o resultado em DOCX.
+O produto organiza dados de processos licitatorios, gera minutas de Estudo Tecnico Preliminar (ETP), Termo de Referencia (TR) e Edital com apoio de IA, permite revisao humana no navegador e exporta o resultado em DOCX.
 
 ## Problema que Resolve
 
@@ -19,8 +19,8 @@ O ARGOS reduz o trabalho inicial de estruturacao desses documentos ao:
 ## Publico-Alvo
 
 - Secretarias municipais e estaduais;
-- setores de compras, licitacoes e contratos;
-- fiscais e gestores de contratos;
+- setores de compras e licitacoes;
+- equipes tecnicas responsaveis pela fase preparatoria;
 - equipes de planejamento da contratacao;
 - consultorias que apoiam orgaos publicos;
 - servidores responsaveis por ETP, TR e documentos preparatorios.
@@ -32,6 +32,7 @@ O ARGOS reduz o trabalho inicial de estruturacao desses documentos ao:
 - suporte a multiplos itens por processo;
 - geracao de ETP com IA;
 - geracao de Termo de Referencia com IA;
+- geracao de Minuta de Edital com IA;
 - prompt estruturado com base na Lei 14.133/2021;
 - editor simples para revisao humana;
 - salvamento de alteracoes;
@@ -45,7 +46,7 @@ O ARGOS reduz o trabalho inicial de estruturacao desses documentos ao:
 
 Os documentos gerados pelo ARGOS sao minutas de apoio.
 
-Todo ETP, Termo de Referencia ou documento produzido pela ferramenta deve passar por revisao humana especializada antes de uso oficial, incluindo validacao tecnica, juridica, orcamentaria e administrativa pelo orgao responsavel.
+Todo ETP, Termo de Referencia, Edital ou documento produzido pela ferramenta deve passar por revisao humana especializada antes de uso oficial, incluindo validacao tecnica, juridica, orcamentaria e administrativa pelo orgao responsavel.
 
 O ARGOS nao substitui parecer juridico, controle interno, fiscalizacao tecnica ou decisao administrativa.
 
@@ -83,8 +84,8 @@ Deploy:
 
 ```text
 backend/                 API FastAPI, models, schemas, services e testes
-frontend/argos-web/  Aplicacao React + Vite do ARGOS
-prompts/                 Prompts-base para ETP e TR
+frontend/argos-web/      Aplicacao React + Vite do ARGOS
+prompts/                 Prompts-base para documentos preparatorios
 templates/               Modelos e referencias
 exports/                 Arquivos exportados localmente
 docs/                    Documentacao tecnica
@@ -273,8 +274,8 @@ Observacao: o MVP usa SQLite com disco persistente em `/var/data`. No Render, di
 MVP funcional para demonstracao:
 
 - cadastro de processo;
-- geracao de ETP/TR;
+- geracao de ETP/TR/Edital;
 - revisao no navegador;
 - exportacao DOCX;
-- dashboard inicial;
+- painel inicial do ARGOS;
 - deploy preparado para Render.

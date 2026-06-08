@@ -1,7 +1,12 @@
 import pytest
 
 from app.schemas.processo_licitatorio import ProcessoLicitatorioCreate
-from app.services.prompt_engine import gerar_prompt_documento, gerar_prompt_etp, gerar_prompt_tr
+from app.services.prompt_engine import (
+    gerar_prompt_documento,
+    gerar_prompt_edital,
+    gerar_prompt_etp,
+    gerar_prompt_tr,
+)
 
 
 def _processo(tipo_documento: str = "ETP") -> ProcessoLicitatorioCreate:
@@ -89,6 +94,19 @@ def test_gera_prompt_tr_estruturado() -> None:
 def test_roteia_prompt_pelo_tipo_documento() -> None:
     assert "Estudo Tecnico Preliminar" in gerar_prompt_documento(_processo("ETP"))
     assert "Termo de Referencia" in gerar_prompt_documento(_processo("TR"))
+    assert "Edital de Pregao Eletronico" in gerar_prompt_documento(_processo("EDITAL"))
+
+
+def test_gera_prompt_edital_estruturado() -> None:
+    prompt = gerar_prompt_edital(_processo("EDITAL"))
+
+    assert "Edital de Pregao Eletronico" in prompt
+    assert "Folha-resumo" in prompt
+    assert "Da participacao na licitacao" in prompt
+    assert "Da fase de habilitacao" in prompt
+    assert "Anexo I - Termo de Referencia" in prompt
+    assert "Minuta de termo de contrato" in prompt
+    assert "layout/arte" in prompt
 
 
 def test_prompt_inclui_dados_institucionais() -> None:
@@ -114,5 +132,5 @@ def test_rejeita_tipo_documento_invalido() -> None:
     processo = _processo("ETP")
     processo.tipo_documento = "OUTRO"
 
-    with pytest.raises(ValueError, match="tipo_documento deve ser ETP ou TR"):
+    with pytest.raises(ValueError, match="tipo_documento deve ser ETP, TR ou EDITAL"):
         gerar_prompt_documento(processo)

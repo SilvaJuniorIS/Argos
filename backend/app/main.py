@@ -13,7 +13,6 @@ from starlette.requests import Request
 from app.api.v1.router import api_router
 from app.core.config import settings
 from app.db.init_db import init_lite_db
-from app.web.dashboard import render_dashboard_page
 
 from scripts.seed import seed
 
@@ -75,7 +74,12 @@ def create_app() -> FastAPI:
 
     @app.get("/", include_in_schema=False)
     def root():
-        return render_dashboard_page()
+        return {
+            "service": settings.app_name,
+            "description": "ARGOS - inteligencia documental para compras publicas",
+            "docs": "/docs",
+            "health": "/health",
+        }
 
     @app.get("/health")
     def health_check():

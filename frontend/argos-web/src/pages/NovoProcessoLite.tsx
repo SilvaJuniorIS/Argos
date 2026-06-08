@@ -266,7 +266,7 @@ export default function NovoProcessoLite() {
             <ArgosLogo compact />
             <div>
               <h1>ARGOS</h1>
-              <p>Cadastro guiado para ETP e Termo de Referencia.</p>
+              <p>Cadastro guiado para ETP, TR e Edital.</p>
             </div>
           </div>
         </div>
@@ -316,7 +316,7 @@ export default function NovoProcessoLite() {
             <fieldset className="lite-choice-group">
               <legend>Documento a gerar</legend>
               <div className="lite-segmented" role="radiogroup" aria-label="Documento a gerar">
-                {(['ETP', 'TR'] as const).map((tipo) => (
+                {(['ETP', 'TR', 'EDITAL'] as const).map((tipo) => (
                   <label key={tipo} className={form.tipo_documento === tipo ? 'active' : ''}>
                     <input
                       type="radio"
@@ -329,7 +329,9 @@ export default function NovoProcessoLite() {
                     <span>
                       {tipo === 'ETP'
                         ? 'Estudo Tecnico Preliminar'
-                        : 'Termo de Referencia'}
+                        : tipo === 'TR'
+                          ? 'Termo de Referencia'
+                          : 'Minuta de Edital'}
                     </span>
                   </label>
                 ))}

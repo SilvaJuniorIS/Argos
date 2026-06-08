@@ -98,12 +98,26 @@ def exportar_docx(documento: DocumentoGerado) -> tuple[BytesIO, str]:
     _adicionar_cabecalho_rodape(doc, documento, Inches, Pt)
     _adicionar_identificacao(doc, documento, WD_ALIGN_PARAGRAPH, RGBColor)
 
-    for bloco in documento.conteudo.splitlines():
-        texto = bloco.strip()
+    blocos = documento.conteudo.splitlines()
+    index = 0
+    while index < len(blocos):
+        texto = blocos[index].strip()
         if not texto:
             doc.add_paragraph("")
+            index += 1
+            continue
+        if _parece_linha_tabela(texto):
+            linhas_tabela = []
+            while index < len(blocos) and _parece_linha_tabela(blocos[index].strip()):
+                linhas_tabela.append(blocos[index].strip())
+                index += 1
+            if _adicionar_tabela_markdown(doc, linhas_tabela):
+                continue
+            for linha in linhas_tabela:
+                _adicionar_bloco_formatado(doc, linha)
             continue
         _adicionar_bloco_formatado(doc, texto)
+        index += 1
 
     buffer = BytesIO()
     doc.save(buffer)
@@ -177,11 +191,7 @@ def _adicionar_cabecalho_rodape(doc, documento: DocumentoGerado, Inches, Pt) -> 
 
 
 def _adicionar_identificacao(doc, documento: DocumentoGerado, WD_ALIGN_PARAGRAPH, RGBColor) -> None:
-    nome_documento = (
-        "Estudo Tecnico Preliminar"
-        if documento.tipo_documento.upper() == "ETP"
-        else "Termo de Referencia"
-    )
+    nome_documento = _nome_documento(documento.tipo_documento)
     titulo = doc.add_heading(nome_documento, level=0)
     titulo.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
@@ -240,6 +250,45 @@ def _adicionar_bloco_formatado(doc, texto: str) -> None:
         doc.add_paragraph(texto, style="List Bullet")
         return
     doc.add_paragraph(texto)
+
+
+def _nome_documento(tipo_documento: str) -> str:
+    tipo = tipo_documento.upper()
+    if tipo == "ETP":
+        return "Estudo Tecnico Preliminar"
+    if tipo == "TR":
+        return "Termo de Referencia"
+    if tipo == "EDITAL":
+        return "Minuta de Edital"
+    return tipo_documento
+
+
+def _parece_linha_tabela(texto: str) -> bool:
+    return texto.startswith("|") and texto.endswith("|") and texto.count("|") >= 2
+
+
+def _adicionar_tabela_markdown(doc, linhas: list[str]) -> bool:
+    rows = []
+    for linha in linhas:
+        cells = [cell.strip() for cell in linha.strip("|").split("|")]
+        if cells and all(re.fullmatch(r":?-{3,}:?", cell or "") for cell in cells):
+            continue
+        rows.append(cells)
+
+    if len(rows) < 2:
+        return False
+
+    cols = max(len(row) for row in rows)
+    table = doc.add_table(rows=len(rows), cols=cols)
+    table.style = "Table Grid"
+    for row_index, row in enumerate(rows):
+        for col_index in range(cols):
+            value = row[col_index] if col_index < len(row) else ""
+            cell = table.rows[row_index].cells[col_index]
+            cell.text = value
+            if row_index == 0 and cell.paragraphs and cell.paragraphs[0].runs:
+                cell.paragraphs[0].runs[0].bold = True
+    return True
 
 
 def _institucional_do_documento(documento: DocumentoGerado):

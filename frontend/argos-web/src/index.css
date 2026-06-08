@@ -615,7 +615,7 @@ body {
 
 .lite-segmented {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -1004,6 +1004,10 @@ body {
 
   .lite-logo-upload {
     align-items: stretch;
+    grid-template-columns: 1fr;
+  }
+
+  .lite-segmented {
     grid-template-columns: 1fr;
   }
 

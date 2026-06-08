@@ -3,12 +3,8 @@ import { useAuth } from '../../hooks/useAuth'
 
 const nav = [
   { to: '/argos', label: 'ARGOS' },
-  { to: '/contratos/dashboard', label: 'Painel contratos' },
-  { to: '/contratos', label: 'Contratos' },
-  { to: '/atas', label: 'Atas de Registro' },
-  { to: '/importacao/contratos', label: 'Incluir Arquivo' },
-  { to: '/alertas', label: 'Alertas' },
-  { to: '/fiscalizacao', label: 'Fiscalizacao' },
+  { to: '/argos/processos/novo', label: 'Novo Processo' },
+  { to: '/argos/institucional', label: 'Institucional' },
 ]
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -20,7 +16,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <aside className="flex w-60 flex-col bg-[#0A2342] p-4 text-white shadow-xl">
         <div className="mb-6">
           <div className="text-xl font-bold">ARGOS</div>
-          <p className="mt-1 text-xs text-blue-100">Fiscalizacao inteligente, clara e segura.</p>
+          <p className="mt-1 text-xs text-blue-100">Inteligencia documental para compras publicas.</p>
         </div>
         <nav className="flex flex-col gap-1">
           {nav.map(({ to, label }) => (

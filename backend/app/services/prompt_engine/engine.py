@@ -50,7 +50,9 @@ def gerar_prompt_documento(processo: ProcessoPromptInput, institucional=None) ->
         return gerar_prompt_etp(processo, dados_institucionais)
     if tipo == "TR":
         return gerar_prompt_tr(processo, dados_institucionais)
-    raise ValueError("tipo_documento deve ser ETP ou TR")
+    if tipo == "EDITAL":
+        return gerar_prompt_edital(processo, dados_institucionais)
+    raise ValueError("tipo_documento deve ser ETP, TR ou EDITAL")
 
 
 def gerar_prompt_etp(
@@ -202,6 +204,71 @@ def gerar_prompt_tr(
         - Campos pendentes claramente marcados como "A preencher".
         - Quando houver lacunas juridicas, tecnicas ou financeiras, sinalize no proprio item
           correspondente, sem criar uma secao extra fora da estrutura obrigatoria.
+        """
+    )
+
+
+def gerar_prompt_edital(
+    processo: ProcessoPromptInput,
+    institucional: DadosInstitucionaisPrompt | None = None,
+) -> str:
+    dados = _normalizar_dados(processo)
+    return _limpar_prompt(
+        f"""
+        Voce e um especialista em editais de pregao eletronico e documentos de licitacao
+        publica brasileira.
+
+        Elabore uma minuta de Edital de Pregao Eletronico com linguagem formal,
+        institucional e objetiva, observando a Lei 14.133/2021.
+
+        Dados do processo:
+        {_formatar_dados(dados)}
+
+        Dados institucionais:
+        {_formatar_institucional(institucional)}
+
+        Regras de redacao:
+        - Nao invente numeros de edital, datas, horarios, plataforma, dotacao ou valores.
+          Use "A preencher" quando esses dados nao forem fornecidos.
+        - Mantenha o edital coerente com o objeto, itens, modalidade, prazo e secretaria.
+        - Preserve materiais, dimensoes, acabamento, unidade e quantidade quando informados.
+        - Para objetos graficos ou de comunicacao visual, inclua regra de envio de layout/arte
+          final para aprovacao previa quando aplicavel.
+        - Nao repita cabecalho, brasao, endereco ou rodape no corpo do texto, pois o sistema
+          ja aplica papel timbrado ao DOCX.
+        - Use secoes e anexos padronizados. Evite texto generico sem relacao com o objeto.
+
+        Estrutura obrigatoria do Edital:
+        1. Folha-resumo
+        2. Do objeto
+        3. Da contratacao
+        4. Da participacao na licitacao
+        5. Da apresentacao da proposta e dos documentos de habilitacao
+        6. Do preenchimento da proposta
+        7. Da abertura da sessao, classificacao das propostas e formulacao de lances
+        8. Da fase de julgamento
+        9. Da exigencia de amostra, catalogo ou layout
+        10. Da fase de habilitacao
+        11. Da formalizacao do contrato
+        12. Da formacao do cadastro de reserva
+        13. Dos recursos
+        14. Das infracoes administrativas e sancoes
+        15. Da impugnacao ao edital e do pedido de esclarecimento
+        16. Das disposicoes gerais
+        17. Anexo I - Termo de Referencia
+        18. Anexo II - Modelo de proposta comercial
+        19. Anexo III - Modelo de declaracao conjunta
+        20. Anexo IV - Minuta de termo de contrato
+        21. Termo de ciencia e notificacao
+
+        Saida esperada:
+        - Titulo do documento.
+        - Secoes numeradas exatamente na ordem acima.
+        - Tabelas em markdown para itens e proposta comercial quando houver dados de itens.
+        - Para itens do objeto, prefira colunas: Item, Descricao, Quantidade.
+        - Para proposta comercial, prefira colunas: Item, Especificacao, Unidade de Medida,
+          Quantidade, Valor Unitario, Valor Total.
+        - Campos pendentes claramente marcados como "A preencher".
         """
     )
 

@@ -69,12 +69,12 @@ export default function Argos() {
             <h2>ARGOS</h2>
             <p>
               Inteligencia documental para a Lei 14.133/2021. Transforme dados basicos do processo
-              em minutas estruturadas de ETP e Termo de Referencia, com revisao humana e exportacao
+              em minutas estruturadas de ETP, Termo de Referencia e Edital, com revisao humana e exportacao
               em DOCX.
             </p>
             <div className="lite-hero-badges">
               <span>Lei 14.133/2021</span>
-              <span>ETP e TR</span>
+              <span>ETP, TR e Edital</span>
               <span>Exportacao DOCX</span>
             </div>
           </div>
@@ -92,7 +92,7 @@ export default function Argos() {
           <article>
             <span>Documentos gerados</span>
             <strong>{dashboard?.total_documentos_gerados ?? 0}</strong>
-            <small>ETPs e Termos de Referencia</small>
+            <small>ETPs, TRs e Editais</small>
           </article>
           <article>
             <span>Gerados</span>
@@ -137,7 +137,7 @@ export default function Argos() {
           ) : ultimosProcessos.length === 0 ? (
             <div className="lite-empty">
               <strong>Comece seu primeiro processo.</strong>
-              <span>Cadastre os dados principais para gerar uma minuta de ETP ou Termo de Referencia.</span>
+              <span>Cadastre os dados principais para gerar uma minuta de ETP, TR ou Edital.</span>
               <Link to="/argos/processos/novo" className="lite-primary-button">
                 Criar primeiro processo
               </Link>

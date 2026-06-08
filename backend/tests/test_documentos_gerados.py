@@ -142,7 +142,13 @@ def test_exporta_documento_gerado_em_docx(client: TestClient, monkeypatch) -> No
     monkeypatch.setattr(
         documento_gerado_service,
         "_gerar_texto_com_llm",
-        lambda prompt: _llm_response("1. Objeto\nTexto revisado do documento.\n- Item preservado"),
+        lambda prompt: _llm_response(
+            "1. Objeto\n"
+            "Texto revisado do documento.\n"
+            "| Item | Descricao | Quantidade |\n"
+            "| --- | --- | --- |\n"
+            "| 1 | Item preservado | 10 |\n"
+        ),
     )
     created = client.post(
         "/api/v1/documentos/gerar",
@@ -168,6 +174,7 @@ def test_exporta_documento_gerado_em_docx(client: TestClient, monkeypatch) -> No
         assert "Rodape institucional configurado." in footer_xml
         assert "1. Objeto" in document_xml
         assert "Item preservado" in document_xml
+        assert "<w:tbl>" in document_xml
 
 
 def test_retorna_404_para_processo_inexistente(client: TestClient) -> None:
