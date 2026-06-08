@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const fallbackBaseURL = import.meta.env.DEV ? 'http://localhost:8000' : ''
+const fallbackBaseURL = import.meta.env.DEV ? 'http://localhost:8002' : ''
 export const apiBaseURL = import.meta.env.VITE_API_URL || fallbackBaseURL
 export const apiDocsURL = apiBaseURL ? `${apiBaseURL.replace(/\/$/, '')}/docs` : '/docs'
 

@@ -37,12 +37,12 @@ Auditar e padronizar a base fullstack antes da evolucao funcional, mantendo a ar
 docker compose up --build
 docker compose exec api alembic upgrade head
 docker compose exec api python scripts/seed.py
-curl http://localhost:8000/health
+curl http://localhost:8002/health
 ```
 
 Tambem validar:
 
-- `http://localhost:8000/docs`
+- `http://localhost:8002/docs`
 - Login com usuario seed.
 - Dashboard.
 - Listagem e detalhe de contratos.

@@ -16,7 +16,7 @@ No projeto da Vercel:
 
 ## API
 
-O frontend chama a API usando `VITE_API_URL`. Em desenvolvimento local, o fallback continua sendo `http://localhost:8000`.
+O frontend chama a API usando `VITE_API_URL`. Em desenvolvimento local, o fallback continua sendo `http://localhost:8002`.
 
 Se o backend estiver no Railway, Render, Fly.io ou outro host, use a URL publica desse backend em `VITE_API_URL`.
 

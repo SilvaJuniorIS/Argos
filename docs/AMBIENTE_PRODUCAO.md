@@ -21,19 +21,16 @@ Em producao, a API recusa inicializacao se `SECRET_KEY` continuar como `change-m
 
 ```env
 LLM_PROVIDER=openrouter
-LLM_FALLBACK_PROVIDER=openai
+LLM_FALLBACK_PROVIDER=
 LLM_TIMEOUT_SECONDS=45
 OPENROUTER_API_KEY=sk-or-...
 OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
 OPENROUTER_DEFAULT_MODEL=openrouter/auto
 OPENROUTER_HTTP_REFERER=https://sua-url-frontend
 OPENROUTER_X_TITLE=ARGOS
-OPENAI_API_KEY=sk-...
-OPENAI_DEFAULT_MODEL=gpt-4o-mini
-OPENAI_TIMEOUT_SECONDS=45
 ```
 
-Se for usar apenas OpenAI, defina `LLM_PROVIDER=openai` e deixe `LLM_FALLBACK_PROVIDER=` vazio ou igual a `openai`.
+Neste primeiro deploy, nao configure OpenAI. O campo `LLM_FALLBACK_PROVIDER` deve ficar vazio para que o backend use somente OpenRouter.
 
 ## E-mail
 

@@ -58,7 +58,7 @@ Backend:
 - SQLAlchemy;
 - SQLite;
 - Pydantic;
-- LLM Gateway com OpenRouter e OpenAI;
+- LLM Gateway com OpenRouter;
 - python-docx;
 - Uvicorn;
 - Pytest.
@@ -101,14 +101,14 @@ python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
 copy .env.example .env
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8002
 ```
 
 URLs do backend:
 
-- API: `http://localhost:8000`
-- Documentacao: `http://localhost:8000/docs`
-- Health check: `http://localhost:8000/health`
+- API: `http://localhost:8002`
+- Documentacao: `http://localhost:8002/docs`
+- Health check: `http://localhost:8002/health`
 
 ### Configurar IA
 
@@ -116,7 +116,7 @@ Edite `backend/.env` e informe:
 
 ```env
 LLM_PROVIDER=openrouter
-LLM_FALLBACK_PROVIDER=openai
+LLM_FALLBACK_PROVIDER=
 LLM_TIMEOUT_SECONDS=45
 
 OPENROUTER_API_KEY=sk-or-sua-chave
@@ -124,15 +124,11 @@ OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
 OPENROUTER_DEFAULT_MODEL=openrouter/auto
 OPENROUTER_HTTP_REFERER=http://localhost:5175
 OPENROUTER_X_TITLE=ARGOS
-
-OPENAI_API_KEY=sk-sua-chave-opcional
-OPENAI_DEFAULT_MODEL=gpt-4o-mini
-OPENAI_TIMEOUT_SECONDS=45
 ```
 
-O ARGOS usa um LLM Gateway interno. Por padrao, o provedor principal e o OpenRouter e a OpenAI fica como fallback. Para rodar apenas com OpenAI, use `LLM_PROVIDER=openai` e deixe `LLM_FALLBACK_PROVIDER=` vazio ou igual a `openai`.
+O ARGOS usa um LLM Gateway interno. Neste primeiro momento, o provedor configurado e somente o OpenRouter. A OpenAI pode ser ativada no futuro como provedor principal ou fallback, mas nao e necessaria para o deploy inicial.
 
-As chaves de IA devem ficar somente no backend. Nunca exponha `OPENROUTER_API_KEY` ou `OPENAI_API_KEY` no frontend.
+As chaves de IA devem ficar somente no backend. Nunca exponha `OPENROUTER_API_KEY` no frontend.
 
 ### Frontend
 
@@ -197,26 +193,20 @@ CORS_ORIGINS=https://sua-url-frontend.onrender.com
 SECRET_KEY=gere-um-valor-seguro
 AUTO_CREATE_LITE_TABLES=true
 LLM_PROVIDER=openrouter
-LLM_FALLBACK_PROVIDER=openai
+LLM_FALLBACK_PROVIDER=
 LLM_TIMEOUT_SECONDS=45
 OPENROUTER_API_KEY=sk-or-sua-chave
 OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
 OPENROUTER_DEFAULT_MODEL=openrouter/auto
 OPENROUTER_HTTP_REFERER=https://sua-url-frontend.onrender.com
 OPENROUTER_X_TITLE=ARGOS
-OPENAI_API_KEY=sk-sua-chave-opcional
-OPENAI_DEFAULT_MODEL=gpt-4o-mini
-OPENAI_TIMEOUT_SECONDS=45
 ```
 
 Troca de provedor/modelo:
 
 - OpenRouter principal: `LLM_PROVIDER=openrouter`
-- OpenAI principal: `LLM_PROVIDER=openai`
-- Fallback OpenAI: `LLM_FALLBACK_PROVIDER=openai`
-- Sem fallback: deixe `LLM_FALLBACK_PROVIDER` vazio ou igual ao provedor principal
+- Sem fallback: deixe `LLM_FALLBACK_PROVIDER` vazio
 - Modelo padrao OpenRouter: `OPENROUTER_DEFAULT_MODEL=openrouter/auto`
-- Modelo padrao OpenAI: `OPENAI_DEFAULT_MODEL=gpt-4o-mini`
 
 O roteamento por tipo de tarefa fica em `backend/app/services/llm_gateway/llm_config.py`. As minutas juridicas usam a tarefa `legal_draft`, que pode apontar para modelos mais fortes no OpenRouter sem alterar a regra de negocio.
 
@@ -245,7 +235,7 @@ VITE_API_URL=https://sua-url-backend.onrender.com
 5. Configure `OPENROUTER_API_KEY` no backend.
 6. Configure `FRONTEND_URL` e `CORS_ORIGINS` com a URL do frontend.
 7. Configure `VITE_API_URL` no frontend com a URL do backend.
-8. Opcionalmente configure `OPENAI_API_KEY` para fallback.
+8. Configure `OPENROUTER_API_KEY` no backend.
 9. Execute o deploy dos dois servicos.
 
 Observacao: o MVP usa SQLite com disco persistente em `/var/data`. No Render, discos persistentes exigem Web Service pago. O blueprint usa `plan: starter` para preservar dados entre deploys.

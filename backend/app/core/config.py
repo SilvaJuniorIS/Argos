@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     cors_origins: str = "http://localhost:5175,http://127.0.0.1:5175"
     auto_create_lite_tables: bool = True
     llm_provider: str = "openrouter"
-    llm_fallback_provider: str = "openai"
+    llm_fallback_provider: str = ""
     llm_timeout_seconds: float = 45.0
     openrouter_api_key: str = ""
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
