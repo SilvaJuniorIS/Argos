@@ -29,6 +29,7 @@ export default function App() {
         <Routes>
           <Route path="/argos" element={<Argos />} />
           <Route path="/argos/processos/novo" element={<NovoProcessoLite />} />
+          <Route path="/argos/processos/:id" element={<NovoProcessoLite />} />
           <Route path="/argos/documentos/:id" element={<DocumentoEditorLite />} />
           <Route path="/lite" element={<Argos />} />
           <Route path="/lite/processos/novo" element={<NovoProcessoLite />} />

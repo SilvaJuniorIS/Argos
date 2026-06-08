@@ -79,3 +79,16 @@ export async function criarProcessoLicitatorio(payload: ProcessoLicitatorioPaylo
   const { data } = await api.post<ProcessoLicitatorio>(endpoint, payload)
   return data
 }
+
+export async function obterProcessoLicitatorio(processoId: number) {
+  const { data } = await api.get<ProcessoLicitatorio>(`${endpoint}${processoId}`)
+  return data
+}
+
+export async function atualizarProcessoLicitatorio(
+  processoId: number,
+  payload: ProcessoLicitatorioPayload,
+) {
+  const { data } = await api.patch<ProcessoLicitatorio>(`${endpoint}${processoId}`, payload)
+  return data
+}

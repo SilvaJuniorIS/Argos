@@ -8,6 +8,7 @@ from app.schemas.processo_licitatorio import (
     ProcessoLicitatorioDashboard,
     ProcessoLicitatorioCreate,
     ProcessoLicitatorioRead,
+    ProcessoLicitatorioUpdate,
 )
 from app.services import processo_licitatorio_service
 
@@ -44,3 +45,18 @@ def buscar_processo_licitatorio_por_id(
             detail="Processo licitatorio nao encontrado",
         )
     return processo
+
+
+@router.patch("/{processo_id}", response_model=ProcessoLicitatorioRead)
+def atualizar_processo_licitatorio(
+    processo_id: int,
+    payload: ProcessoLicitatorioUpdate,
+    db: Annotated[Session, Depends(get_db)],
+):
+    processo = processo_licitatorio_service.get_processo(db, processo_id)
+    if processo is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Processo licitatorio nao encontrado",
+        )
+    return processo_licitatorio_service.update_processo(db, processo, payload)

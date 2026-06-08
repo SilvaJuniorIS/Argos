@@ -153,6 +153,7 @@ export default function Argos() {
                     <th>Status</th>
                     <th>Modalidade</th>
                     <th>Criado em</th>
+                    <th>Acoes</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -173,6 +174,11 @@ export default function Argos() {
                       </td>
                       <td>{processo.modalidade || 'A definir'}</td>
                       <td>{formatDate(processo.created_at)}</td>
+                      <td>
+                        <Link to={`/argos/processos/${processo.id}`} className="lite-link-button">
+                          {processo.status === 'Rascunho' ? 'Continuar' : 'Abrir'}
+                        </Link>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

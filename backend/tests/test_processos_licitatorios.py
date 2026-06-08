@@ -74,6 +74,52 @@ def test_cria_item_de_compatibilidade_quando_payload_antigo_nao_envia_itens(
     assert data["itens"][0]["unidade_medida"] == "servico"
 
 
+def test_atualiza_processo_licitatorio_rascunho(client: TestClient) -> None:
+    create_response = client.post(
+        "/api/v1/processos-licitatorios/",
+        json={
+            "objeto": "Aquisicao inicial",
+            "secretaria": "Secretaria de Administracao",
+            "justificativa": "Necessidade inicial.",
+            "quantidade": "1",
+            "unidade_medida": "unidade",
+            "modalidade": "pregao eletronico",
+            "prazo_execucao": "30 dias",
+            "observacoes": None,
+            "tipo_documento": "ETP",
+        },
+    )
+    processo_id = create_response.json()["id"]
+
+    update_response = client.patch(
+        f"/api/v1/processos-licitatorios/{processo_id}",
+        json={
+            "objeto": "Aquisicao revisada",
+            "justificativa": "Necessidade revisada com mais detalhes.",
+            "tipo_documento": "TR",
+            "itens": [
+                {
+                    "descricao": "Notebook revisado",
+                    "quantidade": "3",
+                    "unidade_medida": "unidade",
+                    "observacoes": "Configuracao tecnica revisada.",
+                }
+            ],
+        },
+    )
+
+    assert update_response.status_code == 200
+    updated = update_response.json()
+    assert updated["objeto"] == "Aquisicao revisada"
+    assert updated["secretaria"] == "Secretaria de Administracao"
+    assert updated["tipo_documento"] == "TR"
+    assert len(updated["itens"]) == 1
+    assert updated["itens"][0]["descricao"] == "Notebook revisado"
+
+    detail_response = client.get(f"/api/v1/processos-licitatorios/{processo_id}")
+    assert detail_response.json()["justificativa"] == "Necessidade revisada com mais detalhes."
+
+
 def test_retorna_404_para_processo_licitatorio_inexistente(client: TestClient) -> None:
     response = client.get("/api/v1/processos-licitatorios/999")
 

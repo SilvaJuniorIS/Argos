@@ -1,10 +1,12 @@
-import { FormEvent, useMemo, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { FormEvent, useEffect, useMemo, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import ArgosLogo from '../components/brand/ArgosLogo'
 import { apiDocsURL, getApiErrorMessage } from '../services/api'
 import { gerarDocumento } from '../services/documentosGerados'
 import {
   criarProcessoLicitatorio,
+  atualizarProcessoLicitatorio,
+  obterProcessoLicitatorio,
   ProcessoLicitatorio,
   ProcessoLicitatorioItem,
   ProcessoLicitatorioPayload,
@@ -61,10 +63,53 @@ function validate(form: ProcessoLicitatorioPayload) {
   return { errors, itemErrors }
 }
 
+function processoToForm(processo: ProcessoLicitatorio): ProcessoLicitatorioPayload {
+  return {
+    objeto: processo.objeto,
+    secretaria: processo.secretaria,
+    justificativa: processo.justificativa,
+    quantidade: processo.quantidade ?? '',
+    unidade_medida: processo.unidade_medida ?? '',
+    modalidade: processo.modalidade ?? '',
+    prazo_execucao: processo.prazo_execucao ?? '',
+    observacoes: processo.observacoes ?? '',
+    tipo_documento: processo.tipo_documento,
+    itens:
+      processo.itens.length > 0
+        ? processo.itens.map((item) => ({
+            descricao: item.descricao,
+            quantidade: item.quantidade,
+            unidade_medida: item.unidade_medida,
+            observacoes: item.observacoes ?? '',
+          }))
+        : emptyForm.itens,
+  }
+}
+
+function normalizePayload(form: ProcessoLicitatorioPayload): ProcessoLicitatorioPayload {
+  const firstItem = form.itens?.[0]
+  return {
+    ...form,
+    quantidade: firstItem?.quantidade === '' ? null : firstItem?.quantidade,
+    unidade_medida: firstItem?.unidade_medida || null,
+    modalidade: form.modalidade || null,
+    prazo_execucao: form.prazo_execucao || null,
+    observacoes: form.observacoes || null,
+    itens: form.itens?.map((item) => ({
+      ...item,
+      quantidade: item.quantidade === '' ? 0 : item.quantidade,
+      observacoes: item.observacoes || null,
+    })),
+  }
+}
+
 export default function NovoProcessoLite() {
+  const { id } = useParams()
+  const processoId = id ? Number(id) : null
   const [form, setForm] = useState<ProcessoLicitatorioPayload>(emptyForm)
   const [errors, setErrors] = useState<FormErrors>({})
   const [itemErrors, setItemErrors] = useState<ItemErrors>({})
+  const [loadingProcesso, setLoadingProcesso] = useState(false)
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState<'success' | 'warning' | 'error'>('success')
@@ -76,6 +121,28 @@ export default function NovoProcessoLite() {
     () => Object.keys(errors).length > 0 || Object.keys(itemErrors).length > 0,
     [errors, itemErrors],
   )
+
+  useEffect(() => {
+    if (!processoId || Number.isNaN(processoId)) return
+    const currentProcessoId = processoId
+
+    async function loadProcesso() {
+      try {
+        setLoadingProcesso(true)
+        setMessage('')
+        const processo = await obterProcessoLicitatorio(currentProcessoId)
+        setForm(processoToForm(processo))
+        setSavedProcesso(processo)
+      } catch (error) {
+        setMessageType('error')
+        setMessage(getApiErrorMessage(error, 'Nao foi possivel carregar este processo.'))
+      } finally {
+        setLoadingProcesso(false)
+      }
+    }
+
+    loadProcesso()
+  }, [processoId])
 
   function updateField(field: keyof ProcessoLicitatorioPayload, value: string) {
     setForm((current) => ({ ...current, [field]: value }))
@@ -143,20 +210,14 @@ export default function NovoProcessoLite() {
     try {
       setSaving(true)
       setMessage('')
-      const firstItem = form.itens?.[0]
-      const created = await criarProcessoLicitatorio({
-        ...form,
-        quantidade: firstItem?.quantidade === '' ? null : firstItem?.quantidade,
-        unidade_medida: firstItem?.unidade_medida || null,
-        itens: form.itens?.map((item) => ({
-          ...item,
-          quantidade: item.quantidade === '' ? 0 : item.quantidade,
-          observacoes: item.observacoes || null,
-        })),
-      })
-      setSavedProcesso(created)
+      const payload = normalizePayload(form)
+      const saved =
+        processoId && !Number.isNaN(processoId)
+          ? await atualizarProcessoLicitatorio(processoId, payload)
+          : await criarProcessoLicitatorio(payload)
+      setSavedProcesso(saved)
       setMessageType('success')
-      setMessage('Processo salvo. Agora voce pode gerar a minuta para revisao.')
+      setMessage('Processo salvo. Agora voce pode gerar a minuta para revisao ou continuar editando.')
     } catch (error) {
       setMessageType('error')
       setMessage(getApiErrorMessage(error, 'Nao foi possivel salvar agora. Tente novamente.'))
@@ -227,7 +288,7 @@ export default function NovoProcessoLite() {
         <header className="lite-page-header">
           <div>
             <span className="lite-eyebrow">Processos licitatorios</span>
-            <h2>Novo Processo</h2>
+            <h2>{processoId ? 'Continuar Processo' : 'Novo Processo'}</h2>
             <p>Informe os dados essenciais para gerar uma minuta consistente e pronta para revisao.</p>
           </div>
           <Link to="/argos" className="lite-ghost-button">Voltar para visao geral</Link>
@@ -236,6 +297,14 @@ export default function NovoProcessoLite() {
         {message && <div className={`lite-message ${messageType}`}>{message}</div>}
 
         <section className="lite-panel">
+          {loadingProcesso && (
+            <div className="lite-loading">
+              <span className="lite-spinner" />
+              <strong>Carregando processo</strong>
+              <small>Recuperando os dados salvos para continuar o preenchimento.</small>
+            </div>
+          )}
+
           <div className="lite-step-strip" aria-label="Etapas do fluxo">
             <span className="active">1. Dados gerais</span>
             <span>2. Itens</span>
