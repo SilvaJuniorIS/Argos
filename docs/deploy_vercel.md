@@ -2,7 +2,7 @@
 
 ## Ponto importante
 
-A porta `5173` e usada apenas pelo Vite em desenvolvimento local. A Vercel nao sobe o servidor `npm run dev` nem expÃµe `localhost:5173`; ela executa `npm run build` e publica a pasta `dist` em uma URL HTTPS propria.
+A porta `5175` e usada apenas pelo Vite em desenvolvimento local. A Vercel nao sobe o servidor `npm run dev` nem expoe `localhost:5175`; ela executa `npm run build` e publica a pasta `dist` em uma URL HTTPS propria.
 
 ## Configuracao recomendada
 

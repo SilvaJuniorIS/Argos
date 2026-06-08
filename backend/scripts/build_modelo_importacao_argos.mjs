@@ -123,7 +123,7 @@ instrucoes.getRange("A3:D10").values = [
   ["5", "Para zerar novamente pelo Docker, pare o ambiente e execute docker compose down -v.", "", ""],
   ["", "", "", ""],
   ["Login inicial", "admin@argos.local", "Senha", "argos123"],
-  ["Portas", "Frontend 5174", "API 8001", "Postgres 5433"],
+  ["Portas", "Frontend 5175", "API 8002", "Postgres 5434"],
 ];
 instrucoes.getRange("A1:D1").format = {
   fill: "#0F766E",

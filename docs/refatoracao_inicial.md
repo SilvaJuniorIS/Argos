@@ -15,7 +15,7 @@ Auditar e padronizar a base fullstack antes da evolucao funcional, mantendo a ar
 - Filtro de contratos foi padronizado internamente para `fiscal_responsavel_id`, mantendo compatibilidade da rota com o parametro `fiscal_id`.
 - API recebeu handlers globais para registrar erros de validacao e excecoes inesperadas com contexto de metodo e rota.
 - Docker Compose passou a executar `alembic upgrade head` antes de iniciar API, worker e beat, evitando tarefas Celery contra tabelas ainda inexistentes.
-- Docker Compose passou a incluir o frontend Vite em `http://localhost:5173`, com `node_modules` isolado em volume nomeado.
+- Docker Compose passou a incluir o frontend Vite em `http://localhost:5175`, com `node_modules` isolado em volume nomeado.
 - Scripts de seed passaram a incluir a raiz do projeto no `sys.path`, permitindo execucao direta com `python scripts/seed.py`.
 - Textos corrompidos por encoding em alerta/e-mail/detalhe de contrato foram normalizados.
 
@@ -55,7 +55,7 @@ Tambem validar:
 - `docker compose exec -T api python scripts/seed.py`: seed concluido.
 - `GET /health`: 200.
 - `GET /docs`: 200.
-- `GET http://localhost:5173`: 200.
+- `GET http://localhost:5175`: 200.
 - `docker compose exec -T frontend npm run build`: TypeScript e Vite build sem erro.
 - Login admin + `GET /api/v1/contratos/dashboard`: 200.
 - Login admin + `GET /api/v1/contratos`: 200, retornando 24 contratos.
