@@ -2,7 +2,8 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 
 const nav = [
-  { to: '/dashboard', label: 'Dashboard' },
+  { to: '/argos', label: 'ARGOS' },
+  { to: '/contratos/dashboard', label: 'Painel contratos' },
   { to: '/contratos', label: 'Contratos' },
   { to: '/atas', label: 'Atas de Registro' },
   { to: '/importacao/contratos', label: 'Incluir Arquivo' },

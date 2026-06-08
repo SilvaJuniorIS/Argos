@@ -36,8 +36,9 @@ export default function App() {
           <Route path="/" element={<Vitrine />} />
           <Route path="/vitrine" element={<Vitrine />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Navigate to="/argos" replace />} />
           <Route
-            path="/dashboard"
+            path="/contratos/dashboard"
             element={
               <PrivateRoute>
                 <Dashboard />
