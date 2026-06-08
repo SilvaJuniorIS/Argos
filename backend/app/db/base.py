@@ -6,6 +6,7 @@ from app.models.contract import Contract, ContractAttachment, ContractImportLog
 from app.models.documento_gerado import DocumentoGerado
 from app.models.fornecedor import Fornecedor
 from app.models.indicador import Indicador
+from app.models.institucional import Institucional
 from app.models.log_auditoria import LogAuditoria
 from app.models.notification import Notification
 from app.models.ocorrencia import Ocorrencia
@@ -25,6 +26,7 @@ __all__ = [
     "DocumentoGerado",
     "Fornecedor",
     "Indicador",
+    "Institucional",
     "LogAuditoria",
     "Notification",
     "Ocorrencia",

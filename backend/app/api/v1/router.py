@@ -11,6 +11,7 @@ from app.api.v1.routes import (
     fiscalizacao,
     fornecedores,
     importacao,
+    institucional,
     processos_licitatorios,
     processos_lite,
     secretarias,
@@ -30,6 +31,7 @@ api_router.include_router(documentos.router, tags=["documentos"])
 api_router.include_router(fiscalizacao.router, prefix="/fiscalizacao", tags=["fiscalizacao"])
 api_router.include_router(auditoria.router, prefix="/auditoria", tags=["auditoria"])
 api_router.include_router(importacao.router, prefix="/importacao", tags=["importacao"])
+api_router.include_router(institucional.router, prefix="/institucional", tags=["institucional"])
 api_router.include_router(
     processos_licitatorios.router,
     prefix="/processos-licitatorios",

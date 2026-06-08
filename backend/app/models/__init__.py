@@ -6,6 +6,7 @@ from .contract import Contract, ContractAttachment, ContractImportLog
 from .documento_gerado import DocumentoGerado
 from .fornecedor import Fornecedor
 from .indicador import Indicador
+from .institucional import Institucional
 from .log_auditoria import LogAuditoria
 from .notification import Notification
 from .ocorrencia import Ocorrencia
@@ -24,6 +25,7 @@ __all__ = [
     "DocumentoGerado",
     "Fornecedor",
     "Indicador",
+    "Institucional",
     "LogAuditoria",
     "Notification",
     "Ocorrencia",

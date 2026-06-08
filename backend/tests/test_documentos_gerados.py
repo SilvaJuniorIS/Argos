@@ -121,6 +121,24 @@ def test_rejeita_atualizacao_vazia(client: TestClient, monkeypatch) -> None:
 
 def test_exporta_documento_gerado_em_docx(client: TestClient, monkeypatch) -> None:
     processo_id = _criar_processo(client, "ETP")
+    client.put(
+        "/api/v1/institucional",
+        json={
+            "nome_orgao": "Prefeitura Municipal de Argos",
+            "nome_municipio": "Argos",
+            "uf": "SP",
+            "cnpj": "12.345.678/0001-90",
+            "endereco": "Praca Central, 100",
+            "telefone": None,
+            "email": None,
+            "site": None,
+            "autoridade_nome": None,
+            "autoridade_cargo": None,
+            "responsavel_tecnico": "Joao Tecnico",
+            "rodape_documentos": "Rodape institucional configurado.",
+            "logo_base64": None,
+        },
+    )
     monkeypatch.setattr(
         documento_gerado_service,
         "_gerar_texto_com_llm",
@@ -142,9 +160,12 @@ def test_exporta_documento_gerado_em_docx(client: TestClient, monkeypatch) -> No
         assert "word/header1.xml" in docx_zip.namelist()
         document_xml = docx_zip.read("word/document.xml").decode("utf-8")
         header_xml = docx_zip.read("word/header1.xml").decode("utf-8")
-        assert "ARGOS" in header_xml
+        footer_xml = docx_zip.read("word/footer1.xml").decode("utf-8")
+        assert "Prefeitura Municipal de Argos" in header_xml
         assert "Estudo Tecnico Preliminar" in document_xml
-        assert "Minuta gerada com apoio do ARGOS" in document_xml
+        assert "Minuta padronizada gerada com apoio do ARGOS" in document_xml
+        assert "Joao Tecnico" in document_xml
+        assert "Rodape institucional configurado." in footer_xml
         assert "1. Objeto" in document_xml
         assert "Item preservado" in document_xml
 

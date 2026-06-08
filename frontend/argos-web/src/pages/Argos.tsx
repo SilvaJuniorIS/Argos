@@ -51,7 +51,7 @@ export default function Argos() {
         <nav className="lite-menu" aria-label="Menu ARGOS">
           <a className="active" href="#dashboard">Visao Geral</a>
           <a href="#processos">Ultimos Processos</a>
-          <a href="#documentos">Documentos</a>
+          <Link to="/argos/institucional">Institucional</Link>
           <a href={apiDocsURL}>API Docs</a>
         </nav>
 

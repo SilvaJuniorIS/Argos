@@ -82,6 +82,25 @@ def test_roteia_prompt_pelo_tipo_documento() -> None:
     assert "Termo de Referencia" in gerar_prompt_documento(_processo("TR"))
 
 
+def test_prompt_inclui_dados_institucionais() -> None:
+    class Institucional:
+        nome_orgao = "Prefeitura Municipal de Argos"
+        nome_municipio = "Argos"
+        uf = "SP"
+        cnpj = "12.345.678/0001-90"
+        endereco = "Praca Central, 100"
+        autoridade_nome = "Maria Gestora"
+        autoridade_cargo = "Prefeita"
+        responsavel_tecnico = "Joao Tecnico"
+
+    prompt = gerar_prompt_documento(_processo("TR"), Institucional())
+
+    assert "Prefeitura Municipal de Argos" in prompt
+    assert "Argos/SP" in prompt
+    assert "Joao Tecnico" in prompt
+    assert "papel timbrado" in prompt
+
+
 def test_rejeita_tipo_documento_invalido() -> None:
     processo = _processo("ETP")
     processo.tipo_documento = "OUTRO"

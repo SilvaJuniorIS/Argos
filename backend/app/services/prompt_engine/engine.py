@@ -30,17 +30,33 @@ class DadosProcessoPrompt:
     itens: list[DadosItemPrompt]
 
 
-def gerar_prompt_documento(processo: ProcessoPromptInput) -> str:
+@dataclass(frozen=True)
+class DadosInstitucionaisPrompt:
+    nome_orgao: str
+    nome_municipio: str | None
+    uf: str | None
+    cnpj: str | None
+    endereco: str | None
+    autoridade_nome: str | None
+    autoridade_cargo: str | None
+    responsavel_tecnico: str | None
+
+
+def gerar_prompt_documento(processo: ProcessoPromptInput, institucional=None) -> str:
     dados = _normalizar_dados(processo)
+    dados_institucionais = _normalizar_institucional(institucional)
     tipo = dados.tipo_documento.upper()
     if tipo == "ETP":
-        return gerar_prompt_etp(processo)
+        return gerar_prompt_etp(processo, dados_institucionais)
     if tipo == "TR":
-        return gerar_prompt_tr(processo)
+        return gerar_prompt_tr(processo, dados_institucionais)
     raise ValueError("tipo_documento deve ser ETP ou TR")
 
 
-def gerar_prompt_etp(processo: ProcessoPromptInput) -> str:
+def gerar_prompt_etp(
+    processo: ProcessoPromptInput,
+    institucional: DadosInstitucionaisPrompt | None = None,
+) -> str:
     dados = _normalizar_dados(processo)
     return _limpar_prompt(
         f"""
@@ -52,6 +68,9 @@ def gerar_prompt_etp(processo: ProcessoPromptInput) -> str:
         Dados do processo:
         {_formatar_dados(dados)}
 
+        Dados institucionais:
+        {_formatar_institucional(institucional)}
+
         Regras de redacao:
         - Escreva como uma minuta tecnica elaborada por servidor experiente, com fluidez,
           contexto e transicoes naturais entre as ideias.
@@ -62,6 +81,10 @@ def gerar_prompt_etp(processo: ProcessoPromptInput) -> str:
         - Mantenha coerencia entre necessidade, solucao, quantidade, prazo e modalidade.
         - Indique pontos que exigem validacao tecnica, juridica ou orcamentaria.
         - Nao produza uma lista seca de topicos. Desenvolva paragrafos objetivos em cada secao.
+        - Use os dados institucionais apenas quando fizer sentido. Nao repita cabecalho,
+          brasao, endereco ou rodape no corpo do texto, pois o sistema ja aplica papel timbrado.
+        - Quando citar responsavel, autoridade, orgao ou municipio, use exatamente os dados
+          institucionais informados.
 
         Estrutura obrigatoria do ETP:
         1. Descricao da necessidade
@@ -90,7 +113,10 @@ def gerar_prompt_etp(processo: ProcessoPromptInput) -> str:
     )
 
 
-def gerar_prompt_tr(processo: ProcessoPromptInput) -> str:
+def gerar_prompt_tr(
+    processo: ProcessoPromptInput,
+    institucional: DadosInstitucionaisPrompt | None = None,
+) -> str:
     dados = _normalizar_dados(processo)
     return _limpar_prompt(
         f"""
@@ -102,6 +128,9 @@ def gerar_prompt_tr(processo: ProcessoPromptInput) -> str:
         Dados do processo:
         {_formatar_dados(dados)}
 
+        Dados institucionais:
+        {_formatar_institucional(institucional)}
+
         Regras de redacao:
         - Escreva como uma minuta tecnica elaborada por servidor experiente, com linguagem
           humana, precisa e institucional.
@@ -112,6 +141,10 @@ def gerar_prompt_tr(processo: ProcessoPromptInput) -> str:
         - Organize o texto para facilitar revisao tecnica, juridica e administrativa.
         - Mantenha consistencia entre objeto, justificativa, quantidade, unidade e prazo.
         - Nao produza uma lista seca de topicos. Desenvolva paragrafos objetivos em cada secao.
+        - Use os dados institucionais apenas quando fizer sentido. Nao repita cabecalho,
+          brasao, endereco ou rodape no corpo do texto, pois o sistema ja aplica papel timbrado.
+        - Quando citar responsavel, autoridade, orgao ou municipio, use exatamente os dados
+          institucionais informados.
 
         Estrutura obrigatoria do Termo de Referencia:
         1. Objeto
@@ -166,6 +199,44 @@ def _formatar_dados(dados: DadosProcessoPrompt) -> str:
         ("Observacoes", dados.observacoes or "A preencher"),
     ]
     return "\n".join(f"- {rotulo}: {valor}" for rotulo, valor in linhas)
+
+
+def _normalizar_institucional(institucional) -> DadosInstitucionaisPrompt | None:
+    if institucional is None:
+        return None
+    return DadosInstitucionaisPrompt(
+        nome_orgao=_valor(getattr(institucional, "nome_orgao", None)),
+        nome_municipio=_valor_opcional(getattr(institucional, "nome_municipio", None)),
+        uf=_valor_opcional(getattr(institucional, "uf", None)),
+        cnpj=_valor_opcional(getattr(institucional, "cnpj", None)),
+        endereco=_valor_opcional(getattr(institucional, "endereco", None)),
+        autoridade_nome=_valor_opcional(getattr(institucional, "autoridade_nome", None)),
+        autoridade_cargo=_valor_opcional(getattr(institucional, "autoridade_cargo", None)),
+        responsavel_tecnico=_valor_opcional(getattr(institucional, "responsavel_tecnico", None)),
+    )
+
+
+def _formatar_institucional(dados: DadosInstitucionaisPrompt | None) -> str:
+    if dados is None:
+        return "- Orgao: A preencher"
+    municipio = dados.nome_municipio or "A preencher"
+    if dados.uf:
+        municipio = f"{municipio}/{dados.uf}"
+    linhas = [
+        ("Orgao", dados.nome_orgao),
+        ("Municipio/UF", municipio),
+        ("CNPJ", dados.cnpj or "A preencher"),
+        ("Endereco", dados.endereco or "A preencher"),
+        ("Autoridade", _formatar_nome_cargo(dados.autoridade_nome, dados.autoridade_cargo)),
+        ("Responsavel tecnico", dados.responsavel_tecnico or "A preencher"),
+    ]
+    return "\n".join(f"- {rotulo}: {valor}" for rotulo, valor in linhas)
+
+
+def _formatar_nome_cargo(nome: str | None, cargo: str | None) -> str:
+    if nome and cargo:
+        return f"{nome} - {cargo}"
+    return nome or cargo or "A preencher"
 
 
 def _normalizar_itens(processo: ProcessoPromptInput) -> list[DadosItemPrompt]:

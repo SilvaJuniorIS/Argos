@@ -1,6 +1,7 @@
 import logging
 from io import BytesIO
 import re
+import base64
 from datetime import datetime
 
 from sqlalchemy.orm import Session
@@ -9,6 +10,7 @@ from app.models.documento_gerado import DocumentoGerado
 from app.models.processo_licitatorio import ProcessoLicitatorio
 from app.schemas.documento_gerado import DocumentoGerarRequest
 from app.services import processo_licitatorio_service
+from app.services import institucional_service
 from app.services.llm_gateway import (
     LLMConfigurationError,
     LLMError,
@@ -42,7 +44,8 @@ def gerar_documento(db: Session, payload: DocumentoGerarRequest) -> DocumentoGer
     if payload.tipo_documento is not None:
         processo.tipo_documento = payload.tipo_documento
 
-    prompt = gerar_prompt_documento(processo)
+    institucional = institucional_service.get_config(db)
+    prompt = gerar_prompt_documento(processo, institucional)
     logger.info(
         "Gerando documento %s para processo %s via LLM Gateway",
         processo.tipo_documento,
@@ -92,7 +95,7 @@ def exportar_docx(documento: DocumentoGerado) -> tuple[BytesIO, str]:
 
     doc = Document()
     _configurar_documento(doc, Inches, Pt, RGBColor)
-    _adicionar_cabecalho_rodape(doc, documento, Pt)
+    _adicionar_cabecalho_rodape(doc, documento, Inches, Pt)
     _adicionar_identificacao(doc, documento, WD_ALIGN_PARAGRAPH, RGBColor)
 
     for bloco in documento.conteudo.splitlines():
@@ -134,19 +137,41 @@ def _configurar_documento(doc, Inches, Pt, RGBColor) -> None:
         style.paragraph_format.space_after = Pt(6)
 
 
-def _adicionar_cabecalho_rodape(doc, documento: DocumentoGerado, Pt) -> None:
+def _adicionar_cabecalho_rodape(doc, documento: DocumentoGerado, Inches, Pt) -> None:
     section = doc.sections[0]
-    header = section.header.paragraphs[0]
-    header.text = "ARGOS | AtlasNex GovTech | Inteligencia documental da Lei 14.133/2021"
-    header.style = doc.styles["Normal"]
-    header.runs[0].bold = True
-    header.runs[0].font.size = Pt(9)
+    institucional = getattr(documento, "_institucional", None) or _institucional_do_documento(documento)
+    header = section.header
+    header_table = header.add_table(rows=1, cols=2, width=Inches(6.5))
+    header_table.autofit = True
+    logo_cell = header_table.rows[0].cells[0]
+    info_cell = header_table.rows[0].cells[1]
+
+    logo_bytes = _decode_logo(getattr(institucional, "logo_base64", None))
+    if logo_bytes:
+        logo_run = logo_cell.paragraphs[0].add_run()
+        logo_run.add_picture(BytesIO(logo_bytes), width=Inches(0.75))
+    else:
+        logo_cell.text = "ARGOS"
+
+    info = info_cell.paragraphs[0]
+    info.alignment = 1
+    linhas = [
+        getattr(institucional, "nome_orgao", None) or "Prefeitura Municipal",
+        _linha_municipio(institucional),
+        _linha_contato(institucional),
+    ]
+    for index, linha in enumerate([linha for linha in linhas if linha]):
+        if index:
+            info.add_run().add_break()
+        run = info.add_run(linha)
+        run.bold = index == 0
+        run.font.size = Pt(10 if index == 0 else 8)
 
     footer = section.footer.paragraphs[0]
-    footer.text = (
-        f"Minuta para revisao humana especializada | Processo {documento.processo_id} | "
-        f"Documento {documento.id}"
+    rodape = getattr(institucional, "rodape_documentos", None) or (
+        "Minuta para revisao humana especializada."
     )
+    footer.text = f"{rodape} | Processo {documento.processo_id} | Documento {documento.id}"
     footer.style = doc.styles["Normal"]
     footer.runs[0].font.size = Pt(8)
 
@@ -161,21 +186,29 @@ def _adicionar_identificacao(doc, documento: DocumentoGerado, WD_ALIGN_PARAGRAPH
     titulo.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
     processo = documento.processo
+    institucional = _institucional_do_documento(documento)
     secretaria = getattr(processo, "secretaria", None) or "A preencher"
     objeto = getattr(processo, "objeto", None) or "A preencher"
+    municipio = _linha_municipio(institucional) or "A preencher"
 
     subtitulo = doc.add_paragraph()
     subtitulo.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run = subtitulo.add_run("Minuta gerada com apoio do ARGOS")
+    run = subtitulo.add_run("Minuta padronizada gerada com apoio do ARGOS")
     run.bold = True
     run.font.color.rgb = RGBColor(10, 35, 66)
 
-    table = doc.add_table(rows=3, cols=2)
+    table = doc.add_table(rows=6, cols=2)
     table.style = "Table Grid"
     rows = [
+        ("Orgao", getattr(institucional, "nome_orgao", None) or "A preencher"),
+        ("Municipio/UF", municipio),
         ("Processo", str(documento.processo_id)),
         ("Secretaria", secretaria),
         ("Objeto", objeto),
+        (
+            "Responsavel tecnico",
+            getattr(institucional, "responsavel_tecnico", None) or "A preencher",
+        ),
     ]
     for row, (label, value) in zip(table.rows, rows, strict=True):
         row.cells[0].text = label
@@ -207,6 +240,47 @@ def _adicionar_bloco_formatado(doc, texto: str) -> None:
         doc.add_paragraph(texto, style="List Bullet")
         return
     doc.add_paragraph(texto)
+
+
+def _institucional_do_documento(documento: DocumentoGerado):
+    session = getattr(documento, "_sa_instance_state", None)
+    if session is not None:
+        db = session.session
+        if db is not None:
+            config = institucional_service.get_config(db)
+            setattr(documento, "_institucional", config)
+            return config
+    return None
+
+
+def _linha_municipio(institucional) -> str:
+    municipio = getattr(institucional, "nome_municipio", None)
+    uf = getattr(institucional, "uf", None)
+    if municipio and uf:
+        return f"{municipio}/{uf}"
+    return municipio or ""
+
+
+def _linha_contato(institucional) -> str:
+    partes = [
+        getattr(institucional, "cnpj", None),
+        getattr(institucional, "endereco", None),
+        getattr(institucional, "telefone", None),
+        getattr(institucional, "email", None),
+        getattr(institucional, "site", None),
+    ]
+    return " | ".join(str(parte) for parte in partes if parte)
+
+
+def _decode_logo(value: str | None) -> bytes | None:
+    if not value:
+        return None
+    try:
+        payload = value.split(",", 1)[1] if "," in value else value
+        return base64.b64decode(payload)
+    except Exception:
+        logger.warning("Logo institucional invalido; DOCX sera gerado sem imagem")
+        return None
 
 
 def _parece_titulo_numerado(texto: str) -> bool:

@@ -738,6 +738,56 @@ body {
   cursor: not-allowed;
 }
 
+.lite-logo-upload {
+  align-items: center;
+  border: 1px solid #dce6f2;
+  border-radius: 10px;
+  background: #f8fbff;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(0, 1fr) 96px auto auto;
+  padding: 16px;
+}
+
+.lite-logo-upload strong {
+  color: #0a2342;
+  display: block;
+  margin-top: 4px;
+}
+
+.lite-logo-upload small {
+  color: #5f748b;
+  display: block;
+  margin-top: 4px;
+}
+
+.lite-logo-upload img,
+.lite-logo-placeholder {
+  align-items: center;
+  aspect-ratio: 1;
+  border: 1px solid #d8e4f1;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  object-fit: contain;
+  padding: 8px;
+  width: 96px;
+}
+
+.lite-logo-placeholder {
+  color: #6b7f95;
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.lite-logo-upload input[type="file"] {
+  height: 1px;
+  opacity: 0;
+  position: absolute;
+  width: 1px;
+}
+
 .lite-editor {
   display: grid;
   gap: 16px;
@@ -950,6 +1000,11 @@ body {
   .lite-form-actions {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .lite-logo-upload {
+    align-items: stretch;
+    grid-template-columns: 1fr;
   }
 
   .lite-editor-toolbar,
