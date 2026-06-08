@@ -13,13 +13,13 @@ npm run dev
 Configure:
 
 ```env
-VITE_API_URL=http://localhost:8000
+VITE_API_URL=http://localhost:8002
 ```
 
 URL local:
 
 ```text
-http://localhost:5174/argos
+http://localhost:5175/argos
 ```
 
 ## Build

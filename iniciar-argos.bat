@@ -55,7 +55,7 @@ echo [2/5] Aguardando API ficar pronta...
 set /a TENTATIVAS=0
 :aguardar_api
 set /a TENTATIVAS+=1
-powershell -NoProfile -Command "try { (Invoke-WebRequest -Uri 'http://localhost:8001/health' -UseBasicParsing -TimeoutSec 3).StatusCode | Out-Null; exit 0 } catch { exit 1 }" >nul 2>&1
+powershell -NoProfile -Command "try { (Invoke-WebRequest -Uri 'http://localhost:8002/health' -UseBasicParsing -TimeoutSec 3).StatusCode | Out-Null; exit 0 } catch { exit 1 }" >nul 2>&1
 if %errorlevel%==0 goto api_pronta
 if %TENTATIVAS% GEQ 45 (
     echo [ERRO] API nao respondeu em tempo habil. Execute: docker compose logs api
@@ -65,7 +65,7 @@ if %TENTATIVAS% GEQ 45 (
 timeout /t 2 /nobreak >nul
 goto aguardar_api
 :api_pronta
-echo [OK] API respondendo em http://localhost:8001
+echo [OK] API respondendo em http://localhost:8002
 
 echo.
 echo [3/5] Aplicando migracoes do banco...
@@ -101,17 +101,17 @@ start "ARGOS - Frontend" cmd /k "cd /d "%~dp0frontend\argos-web" && title ARGOS 
 echo       Aguardando frontend...
 timeout /t 6 /nobreak >nul
 
-start "" "http://localhost:5174"
-start "" "http://localhost:8001/docs"
+start "" "http://localhost:5175"
+start "" "http://localhost:8002/docs"
 
 echo.
 echo  ========================================
 echo   ARGOS em execucao!
 echo  ========================================
 echo.
-echo   Frontend:  http://localhost:5174
-echo   API Docs:  http://localhost:8001/docs
-echo   Health:    http://localhost:8001/health
+echo   Frontend:  http://localhost:5175
+echo   API Docs:  http://localhost:8002/docs
+echo   Health:    http://localhost:8002/health
 echo.
 echo   Login admin:
 echo     E-mail: admin@argos.local

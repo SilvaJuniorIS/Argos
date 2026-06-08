@@ -122,7 +122,7 @@ LLM_TIMEOUT_SECONDS=45
 OPENROUTER_API_KEY=sk-or-sua-chave
 OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
 OPENROUTER_DEFAULT_MODEL=openrouter/auto
-OPENROUTER_HTTP_REFERER=http://localhost:5174
+OPENROUTER_HTTP_REFERER=http://localhost:5175
 OPENROUTER_X_TITLE=ARGOS
 
 OPENAI_API_KEY=sk-sua-chave-opcional
@@ -146,13 +146,13 @@ npm run dev
 Configure `frontend/argos-web/.env`:
 
 ```env
-VITE_API_URL=http://localhost:8000
+VITE_API_URL=http://localhost:8002
 ```
 
 URL do app:
 
 ```text
-http://localhost:5174/argos
+http://localhost:5175/argos
 ```
 
 ## Testes e Build
