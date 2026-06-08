@@ -114,7 +114,7 @@ echo   API Docs:  http://localhost:8002/docs
 echo   Health:    http://localhost:8002/health
 echo.
 echo   Login admin:
-echo     E-mail: admin@argos.local
+echo     E-mail: admin@argos.gov.br
 echo     Senha:  argos123
 echo.
 echo   Para encerrar tudo, execute: parar-argos.bat

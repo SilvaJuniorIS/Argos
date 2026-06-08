@@ -122,7 +122,7 @@ instrucoes.getRange("A3:D10").values = [
   ["4", "A base deste ambiente fica zerada, exceto pelo usuario admin criado para login.", "", ""],
   ["5", "Para zerar novamente pelo Docker, pare o ambiente e execute docker compose down -v.", "", ""],
   ["", "", "", ""],
-  ["Login inicial", "admin@argos.local", "Senha", "argos123"],
+  ["Login inicial", "admin@argos.gov.br", "Senha", "argos123"],
   ["Portas", "Frontend 5175", "API 8002", "Postgres 5434"],
 ];
 instrucoes.getRange("A1:D1").format = {

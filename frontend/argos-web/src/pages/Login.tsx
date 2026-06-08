@@ -6,7 +6,7 @@ import { useAuth } from '../hooks/useAuth'
 
 export default function Login() {
   const { login, isAuthenticated } = useAuth()
-  const [email, setEmail] = useState('admin@argos.local')
+  const [email, setEmail] = useState('admin@argos.gov.br')
   const [password, setPassword] = useState('argos123')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -54,7 +54,7 @@ export default function Login() {
           {loading ? 'Entrando...' : 'Entrar'}
         </Button>
         <p className="mt-4 text-center text-xs text-slate-500">
-          Ambiente de teste: admin@argos.local / argos123
+          Ambiente de teste: admin@argos.gov.br / argos123
         </p>
         <Link to="/vitrine" className="mt-3 block text-center text-xs text-[#1D4ED8] hover:underline">
           Conhecer a vitrine do produto

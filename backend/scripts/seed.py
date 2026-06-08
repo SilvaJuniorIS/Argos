@@ -90,7 +90,7 @@ def seed():
         gestor = get_or_create(
             session,
             User,
-            {"email": "gestor@argos.local"},
+            {"email": "gestor@argos.gov.br"},
             {
                 "nome": "Gestor Demo",
                 "hashed_password": password_hash,
@@ -103,7 +103,7 @@ def seed():
         fiscal = get_or_create(
             session,
             User,
-            {"email": "fiscal@argos.local"},
+            {"email": "fiscal@argos.gov.br"},
             {
                 "nome": "Fiscal Demo",
                 "hashed_password": password_hash,

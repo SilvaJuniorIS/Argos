@@ -79,7 +79,7 @@ def seed() -> None:
         fiscal = get_or_create(
             session,
             User,
-            {"email": "fiscal@argos.local"},
+            {"email": "fiscal@argos.gov.br"},
             {
                 "nome": "Fiscal de Contratos",
                 "role": "fiscal",
@@ -90,7 +90,7 @@ def seed() -> None:
         gestor = get_or_create(
             session,
             User,
-            {"email": "gestor@argos.local"},
+            {"email": "gestor@argos.gov.br"},
             {
                 "nome": "Gestor de Contratos",
                 "role": "gestor",
@@ -101,7 +101,7 @@ def seed() -> None:
         admin = get_or_create(
             session,
             User,
-            {"email": "admin@argos.local"},
+            {"email": "admin@argos.gov.br"},
             {
                 "nome": "Administrador ARGOS",
                 "role": "admin",
