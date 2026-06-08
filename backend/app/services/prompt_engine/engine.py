@@ -86,26 +86,40 @@ def gerar_prompt_etp(
         - Quando citar responsavel, autoridade, orgao ou municipio, use exatamente os dados
           institucionais informados.
 
+        Particularidades por item:
+        - Preserve materiais, dimensoes, acabamento, unidade e quantidade quando informados.
+        - Para objetos graficos ou de comunicacao visual, trate layout/arte final como etapa de
+          aprovacao previa, diferenciando de amostra fisica ou catalogo.
+        - Quando os itens estiverem organizados por local, equipamento, unidade ou programa,
+          mantenha essa agrupacao no texto.
+
         Estrutura obrigatoria do ETP:
-        1. Descricao da necessidade
+        1. Introducao
         2. Area requisitante
-        3. Requisitos da contratacao
-        4. Levantamento de mercado
-        5. Descricao da solucao escolhida
-        6. Estimativa das quantidades
-        7. Estimativa do valor
-        8. Justificativa do parcelamento ou nao
-        9. Resultados pretendidos
-        10. Providencias previas
-        11. Contratacoes correlatas
-        12. Impactos ambientais
-        13. Riscos
-        14. Conclusao
+        3. Objeto
+        4. Justificativa / descricao da necessidade
+        5. Previsao no Plano de Aquisicao Anual
+        6. Requisitos da aquisicao/contratacao
+        7. Estimativas de quantidades
+        8. Levantamento de mercado
+        9. Estimativa de valor
+        10. Descricao da solucao como um todo
+        11. Justificativa para parcelamento ou nao da solucao
+        12. Demonstrativo dos resultados pretendidos
+        13. Providencias previas
+        14. Contratacoes correlatas e/ou interdependentes
+        15. Impactos ambientais
+        16. Conclusao - viabilidade da contratacao
+        17. Lista de anexos
 
         Saida esperada:
         - Titulo do documento.
         - Secoes numeradas exatamente na ordem acima.
         - Paragrafos completos, sem listas vazias.
+        - Tabelas em markdown quando houver quantitativos ou estimativas de valor.
+        - Para quantitativos, prefira colunas: Item, Descricao, Consumo Estimado.
+        - Para estimativas de valor, prefira colunas: Item, Especificacoes, Qtde, Valor Unitario,
+          Valor Total, usando "A preencher" quando nao houver valores.
         - Campos pendentes claramente marcados como "A preencher".
         - Ao mencionar riscos, diferencie risco operacional, tecnico, orcamentario ou juridico
           quando os dados permitirem.
@@ -146,26 +160,45 @@ def gerar_prompt_tr(
         - Quando citar responsavel, autoridade, orgao ou municipio, use exatamente os dados
           institucionais informados.
 
+        Particularidades por item:
+        - Preserve materiais, dimensoes, acabamento, unidade e quantidade quando informados.
+        - Para objetos graficos ou de comunicacao visual, inclua exigencia de envio de layout/arte
+          final para aprovacao previa da contratante antes da producao.
+        - Quando nao houver amostra fisica, explicite que a amostra/catalogo esta dispensada,
+          mantendo a aprovacao previa de layout quando aplicavel.
+        - Quando os itens estiverem organizados por local, equipamento, unidade ou programa,
+          mantenha essa agrupacao no texto.
+
         Estrutura obrigatoria do Termo de Referencia:
         1. Objeto
-        2. Justificativa
-        3. Especificacoes
-        4. Quantitativos
-        5. Condicoes de execucao
-        6. Prazo
-        7. Gestao e fiscalizacao
-        8. Criterios de medicao e pagamento
-        9. Obrigacoes da contratada
-        10. Obrigacoes da contratante
-        11. Sancoes
-        12. Criterio de julgamento
-        13. Estimativa de valor
-        14. Fundamentacao legal
+        2. Area requisitante
+        3. Justificativa / fundamentacao da contratacao
+        4. Descricao da necessidade
+        5. Especificacoes e quantitativo
+        6. Requisitos para a aquisicao/contratacao
+        7. Subcontratacao
+        8. Exigencia de amostra e/ou catalogo
+        9. Obrigacoes do contratante
+        10. Obrigacoes do contratado
+        11. Modelo de execucao do objeto / prazos, condicoes e local
+        12. Modelo de gestao da ata de registro de preco/contrato
+        13. Do fiscal
+        14. Do gestor da ata/contrato
+        15. Pagamento
+        16. Forma e criterios de selecao do fornecedor
+        17. Forma de fornecimento
+        18. Exigencias de habilitacao
+        19. Estimativas do valor da contratacao
+        20. Adequacao orcamentaria
 
         Saida esperada:
         - Titulo do documento.
         - Secoes numeradas exatamente na ordem acima.
         - Paragrafos completos e tecnicamente consistentes.
+        - Tabelas em markdown quando houver quantitativos ou estimativas de valor.
+        - Para quantitativos, prefira colunas: Item, Descricao, Consumo Estimado.
+        - Para estimativas de valor, prefira colunas: Item, Especificacoes, Qtde, Valor Unitario,
+          Valor Total, usando "A preencher" quando nao houver valores.
         - Campos pendentes claramente marcados como "A preencher".
         - Quando houver lacunas juridicas, tecnicas ou financeiras, sinalize no proprio item
           correspondente, sem criar uma secao extra fora da estrutura obrigatoria.

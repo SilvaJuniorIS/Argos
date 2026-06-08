@@ -41,23 +41,27 @@ def test_gera_prompt_etp_estruturado() -> None:
     assert "Notebook corporativo - 10 unidade" in prompt
     assert "Mouse sem fio - 10 unidade" in prompt
     secoes_obrigatorias = [
-        "Descricao da necessidade",
+        "Introducao",
         "Area requisitante",
-        "Requisitos da contratacao",
+        "Objeto",
+        "Justificativa / descricao da necessidade",
+        "Previsao no Plano de Aquisicao Anual",
+        "Requisitos da aquisicao/contratacao",
+        "Estimativas de quantidades",
         "Levantamento de mercado",
-        "Descricao da solucao escolhida",
-        "Estimativa das quantidades",
-        "Estimativa do valor",
-        "Justificativa do parcelamento ou nao",
-        "Resultados pretendidos",
+        "Estimativa de valor",
+        "Descricao da solucao como um todo",
+        "Justificativa para parcelamento ou nao da solucao",
+        "Demonstrativo dos resultados pretendidos",
         "Providencias previas",
-        "Contratacoes correlatas",
+        "Contratacoes correlatas e/ou interdependentes",
         "Impactos ambientais",
-        "Riscos",
-        "Conclusao",
+        "Conclusao - viabilidade da contratacao",
+        "Lista de anexos",
     ]
     for secao in secoes_obrigatorias:
         assert secao in prompt
+    assert "Item, Descricao, Consumo Estimado" in prompt
     assert "tom robotico" in prompt
 
 
@@ -66,14 +70,19 @@ def test_gera_prompt_tr_estruturado() -> None:
 
     assert "Termo de Referencia (TR)" in prompt
     assert "Lei 14.133/2021" in prompt
-    assert "Especificacoes" in prompt
-    assert "Quantitativos" in prompt
-    assert "Condicoes de execucao" in prompt
-    assert "Gestao e fiscalizacao" in prompt
-    assert "Obrigacoes da contratada" in prompt
-    assert "Criterio de julgamento" in prompt
-    assert "Estimativa de valor" in prompt
-    assert "Fundamentacao legal" in prompt
+    assert "Area requisitante" in prompt
+    assert "Justificativa / fundamentacao da contratacao" in prompt
+    assert "Especificacoes e quantitativo" in prompt
+    assert "Subcontratacao" in prompt
+    assert "Exigencia de amostra e/ou catalogo" in prompt
+    assert "Obrigacoes do contratante" in prompt
+    assert "Obrigacoes do contratado" in prompt
+    assert "Modelo de execucao do objeto" in prompt
+    assert "Do fiscal" in prompt
+    assert "Do gestor da ata/contrato" in prompt
+    assert "Exigencias de habilitacao" in prompt
+    assert "Adequacao orcamentaria" in prompt
+    assert "layout/arte" in prompt
     assert "tom robotico" in prompt
 
 
