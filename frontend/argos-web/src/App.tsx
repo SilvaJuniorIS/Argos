@@ -33,10 +33,11 @@ export default function App() {
           <Route path="/lite" element={<Argos />} />
           <Route path="/lite/processos/novo" element={<NovoProcessoLite />} />
           <Route path="/lite/documentos/:id" element={<DocumentoEditorLite />} />
+          <Route path="/" element={<Vitrine />} />
           <Route path="/vitrine" element={<Vitrine />} />
           <Route path="/login" element={<Login />} />
           <Route
-            path="/"
+            path="/dashboard"
             element={
               <PrivateRoute>
                 <Dashboard />
