@@ -1,0 +1,1269 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manual do ARGOS | AtlasNex</title>
+  <style>
+    :root {
+      --ink: #0a2342;
+      --ink-2: #14375d;
+      --muted: #60748b;
+      --line: #dce6f2;
+      --panel: #ffffff;
+      --bg: #f5f7fa;
+      --gold: #f59e0b;
+      --gold-2: #fbbf24;
+      --gold-soft: #fff7e6;
+      --blue: #1d4ed8;
+      --green: #16a34a;
+      --red: #dc2626;
+      --shadow: 0 18px 50px rgba(10, 35, 66, 0.10);
+      --shadow-soft: 0 10px 30px rgba(10, 35, 66, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.13), transparent 32rem),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 48%, #eef4fb 100%);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .manual-shell {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 310px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 34%),
+        var(--ink);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      height: 100vh;
+      padding: 30px 22px;
+      position: sticky;
+      top: 0;
+      box-shadow: 12px 0 40px rgba(10, 35, 66, 0.15);
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: #07182d;
+      box-shadow: 0 10px 26px rgba(245, 158, 11, 0.24);
+      overflow: hidden;
+    }
+
+    .brand-mark svg {
+      width: 46px;
+      height: 46px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 23px;
+      line-height: 1.05;
+    }
+
+    .brand p,
+    .sidebar-card small {
+      margin: 6px 0 0;
+      color: #c9d7ea;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .nav {
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav a {
+      color: #eaf2ff;
+      border-radius: 8px;
+      padding: 11px 12px;
+      font-size: 14px;
+      font-weight: 800;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateX(2px);
+    }
+
+    .sidebar-card {
+      margin-top: auto;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .eyebrow,
+    .sidebar-card span {
+      display: block;
+      color: #f8c873;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-card strong {
+      display: block;
+      margin-top: 6px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 1450px;
+      margin: 0 auto;
+      padding: 34px;
+      display: grid;
+      gap: 24px;
+      align-content: start;
+    }
+
+    .hero {
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, rgba(245, 158, 11, 0.14), transparent 38%),
+        linear-gradient(135deg, var(--ink) 0%, var(--ink-2) 100%);
+      color: #ffffff;
+      padding: 38px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: 24px;
+      align-items: center;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero:after {
+      content: "";
+      position: absolute;
+      right: -110px;
+      top: -130px;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h2 {
+      margin: 10px 0 0;
+      max-width: 820px;
+      font-size: clamp(34px, 5vw, 58px);
+      font-weight: 900;
+      letter-spacing: 0;
+      line-height: 0.98;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 16px 0 0;
+      color: #d9e6f7;
+      font-size: 16px;
+    }
+
+    .hero-badges,
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 22px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 7px 11px;
+    }
+
+    .primary-button,
+    .ghost-button {
+      border-radius: 8px;
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .primary-button {
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      color: var(--ink);
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.22);
+    }
+
+    .ghost-button {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    .hero-visual {
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.09);
+      padding: 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    .mock-window {
+      background: #f8fbff;
+      border: 1px solid #dce6f2;
+      border-radius: 10px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+      overflow: hidden;
+    }
+
+    .mock-top {
+      height: 34px;
+      background: #ffffff;
+      border-bottom: 1px solid #e3ebf5;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 12px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #cbd8e6;
+    }
+
+    .mock-body {
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .mock-card,
+    .mock-row {
+      border: 1px solid #dce6f2;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .mock-card {
+      padding: 14px;
+    }
+
+    .mock-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .mock-metric strong {
+      display: block;
+      color: var(--ink);
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .mock-metric span,
+    .mock-row span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .mock-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 11px 12px;
+      align-items: center;
+    }
+
+    .pill {
+      border-radius: 999px;
+      background: #fffbeb;
+      color: #92400e;
+      padding: 5px 9px;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: var(--shadow-soft);
+      padding: 26px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section h2,
+    .section h3,
+    .section p {
+      margin-top: 0;
+    }
+
+    .section h2 {
+      margin-bottom: 0;
+      font-size: clamp(26px, 3vw, 36px);
+      line-height: 1.12;
+    }
+
+    .section h3 {
+      margin-bottom: 8px;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .section p {
+      color: #28435f;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .info-card,
+    .step-card,
+    .warning-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #ffffff;
+      padding: 18px;
+      box-shadow: 0 1px 0 rgba(10, 35, 66, 0.02);
+    }
+
+    .info-card strong,
+    .step-card strong {
+      display: block;
+      color: var(--ink);
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .info-card span,
+    .step-card span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      background: var(--gold-soft);
+      color: #92400e;
+      font-weight: 900;
+    }
+
+    .warning-card {
+      background: #fff7ed;
+      border-color: #fed7aa;
+      color: #9a3412;
+      font-weight: 800;
+    }
+
+    .success-card {
+      background: #ecfdf3;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      border-radius: 10px;
+      padding: 18px;
+      font-weight: 800;
+    }
+
+    .code {
+      margin: 12px 0 0;
+      border-radius: 10px;
+      border: 1px solid #d8e3f0;
+      background: #07182d;
+      color: #eaf2ff;
+      padding: 16px;
+      overflow-x: auto;
+      font: 13px/1.65 "Cascadia Code", Consolas, "Courier New", monospace;
+      white-space: pre;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid #e3ebf5;
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #e3ebf5;
+      padding: 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fbff;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    td {
+      color: #28435f;
+      font-size: 14px;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .flow-item {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #ffffff;
+      padding: 16px;
+      min-height: 122px;
+      position: relative;
+    }
+
+    .flow-item:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -10px;
+      width: 10px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .flow-item:last-child:after {
+      display: none;
+    }
+
+    .flow-item b {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .flow-item small {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .image-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, rgba(245, 158, 11, 0.08), transparent 38%),
+        #ffffff;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .image-card svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .image-caption {
+      border-top: 1px solid #e3ebf5;
+      padding: 12px 16px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checklist li {
+      border: 1px solid #e3ebf5;
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 12px 14px 12px 42px;
+      position: relative;
+      color: #28435f;
+      font-weight: 700;
+    }
+
+    .checklist li:before {
+      content: "";
+      position: absolute;
+      left: 14px;
+      top: 15px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: inset 0 0 0 4px #ecfdf3;
+    }
+
+    .footer {
+      color: var(--muted);
+      text-align: center;
+      padding: 18px 0 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .manual-shell {
+        display: block;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      main {
+        padding: 0;
+        max-width: none;
+      }
+
+      .section,
+      .hero {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+
+      .primary-button,
+      .ghost-button {
+        display: none;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .hero,
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-item:after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 880px) {
+      .manual-shell {
+        display: block;
+      }
+
+      .sidebar {
+        width: auto;
+        height: auto;
+        position: static;
+        box-shadow: none;
+      }
+
+      .nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      main {
+        padding: 18px;
+      }
+
+      .hero,
+      .section {
+        padding: 22px;
+      }
+
+      .section-header {
+        display: block;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .nav {
+        grid-template-columns: 1fr;
+      }
+
+      main {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="manual-shell">
+    <aside class="sidebar" aria-label="Navegacao do manual">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 96 96">
+            <defs>
+              <linearGradient id="m-g" x1="22" y1="12" x2="74" y2="84" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FDE68A"/>
+                <stop offset=".48" stop-color="#F59E0B"/>
+                <stop offset="1" stop-color="#8A5A08"/>
+              </linearGradient>
+            </defs>
+            <circle cx="48" cy="48" r="37" fill="none" stroke="#F59E0B" stroke-width="1.8" opacity=".58"/>
+            <path d="M22 71 48 14l26 57-12-7-14-31-14 31-12 7Z" fill="url(#m-g)"/>
+            <path d="M17 57c8-11 19-17 31-17s23 6 31 17c-8 11-19 17-31 17S25 68 17 57Z" fill="#07182D" stroke="url(#m-g)" stroke-width="5" stroke-linejoin="round"/>
+            <circle cx="48" cy="57" r="13" fill="#07182D" stroke="url(#m-g)" stroke-width="5"/>
+            <circle cx="54" cy="50" r="4.2" fill="#fff"/>
+            <circle cx="48" cy="10" r="3.4" fill="#FDE68A"/>
+            <circle cx="24" cy="25" r="3.2" fill="#F8C873"/>
+            <circle cx="72" cy="25" r="3.2" fill="#F8C873"/>
+          </svg>
+        </div>
+        <div>
+          <h1>ARGOS</h1>
+          <p>Manual operacional do MVP AtlasNex.</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#visao-geral">Visao geral</a>
+        <a href="#arquitetura">Arquitetura</a>
+        <a href="#instalacao">Instalacao</a>
+        <a href="#uso">Como usar</a>
+        <a href="#ia">Configuracao IA</a>
+        <a href="#deploy">Deploy</a>
+        <a href="#problemas">Problemas comuns</a>
+        <a href="#checklist">Checklist demo</a>
+      </nav>
+
+      <div class="sidebar-card">
+        <span>Documento vivo</span>
+        <strong>Versao MVP</strong>
+        <small>Cadastro, IA, revisao humana e exportacao DOCX.</small>
+      </div>
+    </aside>
+
+    <main>
+      <header class="hero" id="visao-geral">
+        <div>
+          <span class="eyebrow">AtlasNex GovTech</span>
+          <h2>Manual detalhado do ARGOS</h2>
+          <p>
+            Guia completo para instalar, configurar, demonstrar e operar o MVP que gera minutas
+            de ETP e Termo de Referencia com apoio de IA, mantendo revisao humana e exportacao DOCX.
+          </p>
+          <div class="hero-badges">
+            <span class="badge">Lei 14.133/2021</span>
+            <span class="badge">OpenRouter + OpenAI fallback</span>
+            <span class="badge">FastAPI + React</span>
+            <span class="badge">Pronto para Render</span>
+          </div>
+          <div class="button-row">
+            <a class="primary-button" href="#uso">Comecar pelo fluxo</a>
+            <a class="ghost-button" href="#instalacao">Ver instalacao</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Imagem ilustrativa do dashboard ARGOS">
+          <div class="mock-window">
+            <div class="mock-top">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <div class="mock-body">
+              <div class="mock-card">
+                <div class="mock-grid">
+                  <div class="mock-metric">
+                    <strong>12</strong>
+                    <span>Processos</span>
+                  </div>
+                  <div class="mock-metric">
+                    <strong>18</strong>
+                    <span>Documentos</span>
+                  </div>
+                  <div class="mock-metric">
+                    <strong>7</strong>
+                    <span>Revisados</span>
+                  </div>
+                </div>
+              </div>
+              <div class="mock-row">
+                <span>Aquisicao de notebooks</span>
+                <b class="pill">ETP</b>
+              </div>
+              <div class="mock-row">
+                <span>Servico de limpeza predial</span>
+                <b class="pill">TR</b>
+              </div>
+              <div class="mock-row">
+                <span>Material escolar anual</span>
+                <b class="pill">Revisado</b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Produto</span>
+            <h2>O que o ARGOS faz</h2>
+          </div>
+          <p class="muted">MVP comercial focado no menor fluxo funcional.</p>
+        </div>
+
+        <div class="grid-4">
+          <article class="info-card">
+            <strong>1. Cadastra processos</strong>
+            <span>Recebe objeto, secretaria, justificativa, modalidade, prazo e itens.</span>
+          </article>
+          <article class="info-card">
+            <strong>2. Gera minutas</strong>
+            <span>Cria ETP ou Termo de Referencia com prompts estruturados.</span>
+          </article>
+          <article class="info-card">
+            <strong>3. Permite revisao</strong>
+            <span>Entrega um editor simples para ajuste humano antes do uso oficial.</span>
+          </article>
+          <article class="info-card">
+            <strong>4. Exporta DOCX</strong>
+            <span>Gera arquivo apresentavel com cabecalho institucional.</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="arquitetura">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Arquitetura</span>
+            <h2>Como o sistema esta organizado</h2>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <p>
+              O MVP separa frontend, backend, prompts, templates, exports e documentacao. O backend
+              concentra regras de negocio, banco SQLite, geracao DOCX e chamadas de IA via LLM Gateway.
+              O frontend consome somente a API FastAPI e nunca recebe chaves sensiveis.
+            </p>
+            <div class="code">C:\ProjetoArgos
+|-- backend/                 API FastAPI, SQLite, services e testes
+|-- frontend/argos-web/  React + Vite
+|-- prompts/                 Prompts-base para ETP e TR
+|-- templates/               Modelos e referencias
+|-- exports/                 Saidas locais
+|-- docs/                    Documentacao tecnica
+|-- manual.html              Este manual</div>
+          </div>
+
+          <div class="image-card">
+            <svg viewBox="0 0 760 440" role="img" aria-label="Diagrama da arquitetura ARGOS">
+              <rect width="760" height="440" fill="#f8fbff"></rect>
+              <rect x="34" y="42" width="190" height="96" rx="10" fill="#0a2342"></rect>
+              <text x="129" y="82" text-anchor="middle" fill="#fff" font-size="18" font-weight="800">React + Vite</text>
+              <text x="129" y="110" text-anchor="middle" fill="#c9d7ea" font-size="13">Frontend</text>
+              <rect x="286" y="42" width="190" height="96" rx="10" fill="#1d4ed8"></rect>
+              <text x="381" y="82" text-anchor="middle" fill="#fff" font-size="18" font-weight="800">FastAPI</text>
+              <text x="381" y="110" text-anchor="middle" fill="#d9e6f7" font-size="13">Backend</text>
+              <rect x="536" y="42" width="190" height="96" rx="10" fill="#16a34a"></rect>
+              <text x="631" y="82" text-anchor="middle" fill="#fff" font-size="18" font-weight="800">SQLite</text>
+              <text x="631" y="110" text-anchor="middle" fill="#dcfce7" font-size="13">Dados do MVP</text>
+              <rect x="160" y="242" width="190" height="96" rx="10" fill="#f59e0b"></rect>
+              <text x="255" y="282" text-anchor="middle" fill="#0a2342" font-size="18" font-weight="900">LLM Gateway</text>
+              <text x="255" y="310" text-anchor="middle" fill="#78350f" font-size="13">OpenRouter / OpenAI</text>
+              <rect x="410" y="242" width="190" height="96" rx="10" fill="#ffffff" stroke="#dce6f2"></rect>
+              <text x="505" y="282" text-anchor="middle" fill="#0a2342" font-size="18" font-weight="900">DOCX</text>
+              <text x="505" y="310" text-anchor="middle" fill="#60748b" font-size="13">python-docx</text>
+              <path d="M224 90 H286" stroke="#f59e0b" stroke-width="5" stroke-linecap="round"></path>
+              <path d="M476 90 H536" stroke="#f59e0b" stroke-width="5" stroke-linecap="round"></path>
+              <path d="M381 138 C381 190 255 190 255 242" stroke="#f59e0b" stroke-width="5" fill="none" stroke-linecap="round"></path>
+              <path d="M381 138 C381 190 505 190 505 242" stroke="#f59e0b" stroke-width="5" fill="none" stroke-linecap="round"></path>
+              <text x="380" y="390" text-anchor="middle" fill="#60748b" font-size="14" font-weight="800">Chaves de IA ficam somente no backend</text>
+            </svg>
+            <div class="image-caption">Imagem 1: arquitetura minima do MVP.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="instalacao">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Instalacao local</span>
+            <h2>Como rodar na maquina</h2>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="step-card">
+            <div class="step-number">1</div>
+            <strong>Backend FastAPI</strong>
+            <span>Execute os comandos abaixo a partir de <b>C:\ProjetoArgos</b>.</span>
+            <div class="code">cd C:\ProjetoArgos\backend
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+copy .env.example .env
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000</div>
+          </article>
+
+          <article class="step-card">
+            <div class="step-number">2</div>
+            <strong>Frontend React</strong>
+            <span>Em outro terminal, suba a interface web.</span>
+            <div class="code">cd C:\ProjetoArgos\frontend\argos-web
+npm ci
+copy .env.example .env
+npm run dev</div>
+          </article>
+        </div>
+
+        <div class="grid-3" style="margin-top: 16px;">
+          <article class="info-card">
+            <strong>Aplicacao</strong>
+            <span>http://localhost:5174/argos</span>
+          </article>
+          <article class="info-card">
+            <strong>API</strong>
+            <span>http://localhost:8000</span>
+          </article>
+          <article class="info-card">
+            <strong>Swagger</strong>
+            <span>http://localhost:8000/docs</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="uso">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Operacao</span>
+            <h2>Fluxo recomendado de uso</h2>
+          </div>
+        </div>
+
+        <div class="flow" aria-label="Fluxo do ARGOS">
+          <div class="flow-item">
+            <b>1. Abrir dashboard</b>
+            <small>Veja totais, status e ultimos processos cadastrados.</small>
+          </div>
+          <div class="flow-item">
+            <b>2. Criar processo</b>
+            <small>Preencha dados gerais e itens do processo.</small>
+          </div>
+          <div class="flow-item">
+            <b>3. Gerar minuta</b>
+            <small>Escolha ETP ou TR e aguarde a IA estruturar o texto.</small>
+          </div>
+          <div class="flow-item">
+            <b>4. Revisar conteudo</b>
+            <small>Leia, ajuste e salve a revisao humana.</small>
+          </div>
+          <div class="flow-item">
+            <b>5. Exportar DOCX</b>
+            <small>Baixe o documento para tramitacao interna.</small>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 18px;">
+          <div class="image-card">
+            <svg viewBox="0 0 760 460" role="img" aria-label="Imagem do cadastro de novo processo">
+              <rect width="760" height="460" fill="#f8fbff"></rect>
+              <rect x="34" y="34" width="692" height="392" rx="12" fill="#fff" stroke="#dce6f2"></rect>
+              <text x="66" y="78" fill="#0a2342" font-size="28" font-weight="900">Novo Processo</text>
+              <text x="66" y="108" fill="#60748b" font-size="15">Dados essenciais para gerar ETP ou TR</text>
+              <rect x="66" y="142" width="628" height="64" rx="8" fill="#f8fbff" stroke="#dce6f2"></rect>
+              <text x="88" y="170" fill="#60748b" font-size="13" font-weight="800">Objeto da contratacao</text>
+              <text x="88" y="192" fill="#0a2342" font-size="15">Aquisicao de notebooks para equipes tecnicas</text>
+              <rect x="66" y="224" width="302" height="58" rx="8" fill="#fff" stroke="#dce6f2"></rect>
+              <rect x="392" y="224" width="302" height="58" rx="8" fill="#fff" stroke="#dce6f2"></rect>
+              <text x="88" y="258" fill="#0a2342" font-size="15">Secretaria de Administracao</text>
+              <text x="414" y="258" fill="#0a2342" font-size="15">Pregao eletronico</text>
+              <rect x="66" y="302" width="628" height="66" rx="8" fill="#fff7e6" stroke="#f8d58d"></rect>
+              <text x="88" y="330" fill="#92400e" font-size="13" font-weight="900">Itens do processo</text>
+              <text x="88" y="352" fill="#0a2342" font-size="15">Notebook corporativo | 10 unidades</text>
+              <rect x="520" y="382" width="174" height="34" rx="8" fill="#f59e0b"></rect>
+              <text x="607" y="405" text-anchor="middle" fill="#0a2342" font-size="14" font-weight="900">Gerar minuta</text>
+            </svg>
+            <div class="image-caption">Imagem 2: cadastro guiado do processo.</div>
+          </div>
+
+          <div>
+            <h3>Boas praticas no cadastro</h3>
+            <ul class="checklist">
+              <li>Escreva o objeto com clareza, evitando descricoes genericas.</li>
+              <li>Informe a area requisitante exatamente como deve aparecer na minuta.</li>
+              <li>Use a justificativa para explicar a necessidade publica e o problema a resolver.</li>
+              <li>Cadastre todos os itens relevantes, com quantidade e unidade de medida.</li>
+              <li>Use observacoes para restricoes, prazos, locais de entrega ou detalhes tecnicos.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="documentos">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Documentos</span>
+            <h2>ETP e Termo de Referencia</h2>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Documento</th>
+                <th>Quando usar</th>
+                <th>Principais secoes geradas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>ETP</strong></td>
+                <td>Planejamento inicial da contratacao e estudo da necessidade.</td>
+                <td>Necessidade, requisitos, mercado, solucao escolhida, quantidades, valor, riscos e conclusao.</td>
+              </tr>
+              <tr>
+                <td><strong>Termo de Referencia</strong></td>
+                <td>Detalhamento da contratacao para orientar licitacao, execucao e fiscalizacao.</td>
+                <td>Objeto, justificativa, especificacoes, quantitativos, gestao, pagamento, obrigacoes e sancoes.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="warning-card" style="margin-top: 16px;">
+          Importante: todo documento gerado e uma minuta de apoio. Antes do uso oficial, faca revisao
+          tecnica, juridica, orcamentaria e administrativa.
+        </div>
+      </section>
+
+      <section class="section" id="ia">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">LLM Gateway</span>
+            <h2>Configuracao de IA</h2>
+          </div>
+        </div>
+
+        <p>
+          O backend usa uma camada chamada LLM Gateway. Ela escolhe o provedor principal,
+          tenta fallback quando necessario e normaliza a resposta para o restante do sistema.
+          Nenhuma tela do frontend recebe chaves de IA.
+        </p>
+
+        <div class="grid-2">
+          <article class="step-card">
+            <strong>OpenRouter como principal</strong>
+            <span>Configuracao recomendada para o MVP por ser compativel com Chat Completions.</span>
+            <div class="code">LLM_PROVIDER=openrouter
+LLM_FALLBACK_PROVIDER=openai
+LLM_TIMEOUT_SECONDS=45
+OPENROUTER_API_KEY=sk-or-sua-chave
+OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+OPENROUTER_DEFAULT_MODEL=openrouter/auto
+OPENROUTER_HTTP_REFERER=http://localhost:5174
+OPENROUTER_X_TITLE=ARGOS
+OPENAI_API_KEY=sk-sua-chave-opcional
+OPENAI_DEFAULT_MODEL=gpt-4o-mini</div>
+          </article>
+
+          <article class="step-card">
+            <strong>OpenAI como unico provedor</strong>
+            <span>Use se quiser operar sem OpenRouter no momento.</span>
+            <div class="code">LLM_PROVIDER=openai
+LLM_FALLBACK_PROVIDER=
+OPENAI_API_KEY=sk-sua-chave
+OPENAI_DEFAULT_MODEL=gpt-4o-mini
+OPENAI_TIMEOUT_SECONDS=45</div>
+          </article>
+        </div>
+
+        <div class="table-wrap" style="margin-top: 16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Variavel</th>
+                <th>Funcao</th>
+                <th>Exemplo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>LLM_PROVIDER</td>
+                <td>Define o provedor principal.</td>
+                <td>openrouter</td>
+              </tr>
+              <tr>
+                <td>LLM_FALLBACK_PROVIDER</td>
+                <td>Define o provedor usado se o principal falhar.</td>
+                <td>openai</td>
+              </tr>
+              <tr>
+                <td>OPENROUTER_DEFAULT_MODEL</td>
+                <td>Modelo padrao no OpenRouter.</td>
+                <td>openrouter/auto</td>
+              </tr>
+              <tr>
+                <td>OPENAI_DEFAULT_MODEL</td>
+                <td>Modelo padrao no provedor OpenAI.</td>
+                <td>gpt-4o-mini</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="exportacao">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Exportacao</span>
+            <h2>Revisao e DOCX</h2>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <p>
+              Depois que a IA gera a minuta, o usuario entra na tela de revisao. O conteudo pode ser
+              editado diretamente no navegador, salvo como revisado e exportado em DOCX.
+            </p>
+            <ul class="checklist">
+              <li>Use o editor para corrigir trechos genericos ou incompletos.</li>
+              <li>Substitua campos "A preencher" por dados reais do processo.</li>
+              <li>Confirme fundamentacao legal, prazos, quantidades e obrigacoes.</li>
+              <li>Exporte somente depois de validar a minuta com a equipe responsavel.</li>
+            </ul>
+          </div>
+
+          <div class="image-card">
+            <svg viewBox="0 0 760 460" role="img" aria-label="Imagem ilustrativa do documento DOCX">
+              <rect width="760" height="460" fill="#f8fbff"></rect>
+              <rect x="196" y="34" width="368" height="392" rx="10" fill="#ffffff" stroke="#dce6f2"></rect>
+              <rect x="226" y="66" width="308" height="34" rx="6" fill="#0a2342"></rect>
+              <text x="380" y="89" text-anchor="middle" fill="#fff" font-size="14" font-weight="900">ARGOS | AtlasNex</text>
+              <text x="380" y="135" text-anchor="middle" fill="#0a2342" font-size="24" font-weight="900">Termo de Referencia</text>
+              <rect x="246" y="160" width="268" height="44" rx="6" fill="#fff7e6" stroke="#f8d58d"></rect>
+              <text x="380" y="187" text-anchor="middle" fill="#92400e" font-size="13" font-weight="900">Minuta para revisao humana especializada</text>
+              <rect x="246" y="232" width="268" height="8" rx="4" fill="#dce6f2"></rect>
+              <rect x="246" y="256" width="216" height="8" rx="4" fill="#dce6f2"></rect>
+              <rect x="246" y="292" width="268" height="8" rx="4" fill="#dce6f2"></rect>
+              <rect x="246" y="316" width="238" height="8" rx="4" fill="#dce6f2"></rect>
+              <rect x="246" y="352" width="268" height="8" rx="4" fill="#dce6f2"></rect>
+              <circle cx="570" cy="92" r="42" fill="#16a34a"></circle>
+              <path d="M551 92 L565 106 L590 76" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <div class="image-caption">Imagem 3: saida DOCX com cabecalho institucional.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="deploy">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Producao</span>
+            <h2>Deploy no Render</h2>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="step-card">
+            <strong>Backend</strong>
+            <span>Use o servico `argos-api` definido no `render.yaml`.</span>
+            <div class="code">Root Directory: backend
+Build Command: pip install -r requirements.txt
+Start Command: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+DATABASE_URL=sqlite:////var/data/argos.db</div>
+          </article>
+
+          <article class="step-card">
+            <strong>Frontend</strong>
+            <span>Use o servico static `argos-web` definido no `render.yaml`.</span>
+            <div class="code">Root Directory: frontend/argos-web
+Build Command: npm ci && npm run build
+Publish Directory: dist
+VITE_API_URL=https://sua-url-backend.onrender.com</div>
+          </article>
+        </div>
+
+        <div class="warning-card" style="margin-top: 16px;">
+          No Render, SQLite com disco persistente exige Web Service com disco configurado. Para uso multiusuario
+          ou volume maior, o proximo passo recomendado e migrar para PostgreSQL.
+        </div>
+      </section>
+
+      <section class="section" id="problemas">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Suporte rapido</span>
+            <h2>Problemas comuns e solucoes</h2>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Sintoma</th>
+                <th>Causa provavel</th>
+                <th>Como resolver</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Dashboard nao carrega</td>
+                <td>Backend desligado ou URL incorreta.</td>
+                <td>Confirme `uvicorn` em `localhost:8000` e `VITE_API_URL` no frontend.</td>
+              </tr>
+              <tr>
+                <td>Erro ao gerar documento</td>
+                <td>Chave IA ausente, invalida ou provedor indisponivel.</td>
+                <td>Revise `OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `LLM_PROVIDER` e logs do backend.</td>
+              </tr>
+              <tr>
+                <td>CORS bloqueando requisicoes</td>
+                <td>Frontend fora da lista permitida.</td>
+                <td>Inclua a URL correta em `CORS_ORIGINS`.</td>
+              </tr>
+              <tr>
+                <td>DOCX nao baixa</td>
+                <td>Documento inexistente ou erro em `python-docx`.</td>
+                <td>Confira se o documento foi salvo e se as dependencias foram instaladas.</td>
+              </tr>
+              <tr>
+                <td>Deploy perde dados</td>
+                <td>SQLite sem disco persistente.</td>
+                <td>Use disco em `/var/data` ou migre para PostgreSQL.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="checklist">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Apresentacao comercial</span>
+            <h2>Checklist antes da demo</h2>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <ul class="checklist">
+            <li>Backend rodando e `/health` respondendo.</li>
+            <li>Frontend abrindo em `/argos`.</li>
+            <li>`OPENROUTER_API_KEY` configurada no backend.</li>
+            <li>Fallback OpenAI configurado, se disponivel.</li>
+            <li>Um processo de exemplo ja cadastrado.</li>
+            <li>Geracao de ETP testada antes da reuniao.</li>
+            <li>Exportacao DOCX validada.</li>
+            <li>Aviso de revisao humana explicado ao cliente.</li>
+          </ul>
+
+          <div class="success-card">
+            Roteiro sugerido: comece pelo dashboard, crie um novo processo simples, gere uma minuta,
+            edite um paragrafo no navegador e exporte o DOCX. Esse caminho mostra valor real sem
+            depender de funcionalidades futuras.
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        ARGOS | AtlasNex GovTech | Manual operacional do MVP
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

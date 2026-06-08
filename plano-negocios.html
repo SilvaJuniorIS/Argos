@@ -1,0 +1,1169 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plano de Negocios | ARGOS</title>
+  <style>
+    :root {
+      --ink: #0a2342;
+      --ink-2: #14375d;
+      --muted: #60748b;
+      --line: #dce6f2;
+      --bg: #f5f7fa;
+      --gold: #f59e0b;
+      --gold-2: #fbbf24;
+      --gold-soft: #fff7e6;
+      --blue: #1d4ed8;
+      --green: #16a34a;
+      --red: #dc2626;
+      --shadow: 0 18px 50px rgba(10, 35, 66, 0.10);
+      --shadow-soft: 0 10px 30px rgba(10, 35, 66, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.13), transparent 32rem),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 48%, #eef4fb 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 310px;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      padding: 30px 22px;
+      color: #fff;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 34%),
+        var(--ink);
+      box-shadow: 12px 0 40px rgba(10, 35, 66, 0.15);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: #07182d;
+      box-shadow: 0 10px 26px rgba(245, 158, 11, 0.28);
+      overflow: hidden;
+    }
+
+    .mark svg {
+      width: 46px;
+      height: 46px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 23px;
+      line-height: 1.05;
+    }
+
+    .brand p,
+    .sidebar-card small {
+      margin: 6px 0 0;
+      color: #c9d7ea;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .nav {
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav a {
+      color: #eaf2ff;
+      border-radius: 8px;
+      padding: 11px 12px;
+      font-size: 14px;
+      font-weight: 800;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateX(2px);
+    }
+
+    .sidebar-card {
+      margin-top: auto;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .eyebrow,
+    .sidebar-card span {
+      display: block;
+      color: #f8c873;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-card strong {
+      display: block;
+      margin-top: 6px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 1450px;
+      margin: 0 auto;
+      padding: 34px;
+      display: grid;
+      gap: 24px;
+      align-content: start;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+      gap: 26px;
+      align-items: center;
+      border-radius: 10px;
+      padding: 38px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(245, 158, 11, 0.14), transparent 38%),
+        linear-gradient(135deg, var(--ink) 0%, var(--ink-2) 100%);
+      box-shadow: var(--shadow);
+    }
+
+    .hero:after {
+      content: "";
+      position: absolute;
+      right: -110px;
+      top: -130px;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h2 {
+      max-width: 840px;
+      margin: 10px 0 0;
+      font-size: clamp(34px, 5vw, 58px);
+      font-weight: 900;
+      line-height: 0.98;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 16px 0 0;
+      color: #d9e6f7;
+      font-size: 16px;
+    }
+
+    .badges,
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 22px;
+    }
+
+    .badge {
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 7px 11px;
+    }
+
+    .button {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      padding: 0 18px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      color: var(--ink);
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.22);
+    }
+
+    .hero-card {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.09);
+      padding: 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    .unit-metrics {
+      display: grid;
+      gap: 10px;
+    }
+
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 14px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .metric strong {
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: var(--shadow-soft);
+      padding: 26px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font-size: clamp(26px, 3vw, 36px);
+      line-height: 1.12;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    p {
+      color: #28435f;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      padding: 18px;
+      box-shadow: 0 1px 0 rgba(10, 35, 66, 0.02);
+    }
+
+    .card strong {
+      display: block;
+      color: var(--ink);
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .card span,
+    .card li {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .number {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      background: var(--gold-soft);
+      color: #92400e;
+      font-weight: 900;
+    }
+
+    .highlight {
+      border-radius: 10px;
+      border: 1px solid #f8d58d;
+      background: var(--gold-soft);
+      padding: 18px;
+      color: #78350f;
+      font-weight: 800;
+    }
+
+    .success {
+      border-radius: 10px;
+      border: 1px solid #bbf7d0;
+      background: #ecfdf3;
+      padding: 18px;
+      color: #166534;
+      font-weight: 800;
+    }
+
+    .risk {
+      border-radius: 10px;
+      border: 1px solid #fecaca;
+      background: #fef2f2;
+      padding: 18px;
+      color: #991b1b;
+      font-weight: 800;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid #e3ebf5;
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 840px;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #e3ebf5;
+      padding: 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fbff;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    td {
+      color: #28435f;
+      font-size: 14px;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .timeline-card {
+      position: relative;
+      min-height: 150px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      padding: 16px;
+    }
+
+    .timeline-card:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -10px;
+      width: 10px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .timeline-card:last-child:after {
+      display: none;
+    }
+
+    .pill {
+      display: inline-flex;
+      border-radius: 999px;
+      background: #fffbeb;
+      color: #92400e;
+      padding: 5px 9px;
+      font-size: 11px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .chart {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      padding: 20px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 150px 1fr 90px;
+      gap: 12px;
+      align-items: center;
+      margin: 12px 0;
+      color: #28435f;
+      font-weight: 800;
+    }
+
+    .bar-bg {
+      height: 16px;
+      border-radius: 999px;
+      background: #e8f0f8;
+      overflow: hidden;
+    }
+
+    .bar {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue), var(--gold));
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checklist li {
+      position: relative;
+      border: 1px solid #e3ebf5;
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px 14px 12px 42px;
+      color: #28435f;
+      font-weight: 700;
+    }
+
+    .checklist li:before {
+      content: "";
+      position: absolute;
+      left: 14px;
+      top: 15px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: inset 0 0 0 4px #ecfdf3;
+    }
+
+    .footer {
+      color: var(--muted);
+      text-align: center;
+      padding: 18px 0 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .shell {
+        display: block;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      main {
+        padding: 0;
+        max-width: none;
+      }
+
+      .section,
+      .hero {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .hero,
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-card:after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 880px) {
+      .shell {
+        display: block;
+      }
+
+      .sidebar {
+        width: auto;
+        height: auto;
+        position: static;
+        box-shadow: none;
+      }
+
+      .nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      main {
+        padding: 18px;
+      }
+
+      .hero,
+      .section {
+        padding: 22px;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .bar-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .nav {
+        grid-template-columns: 1fr;
+      }
+
+      main {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Navegacao do plano de negocios">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">
+          <svg viewBox="0 0 96 96">
+            <defs>
+              <linearGradient id="p-g" x1="22" y1="12" x2="74" y2="84" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FDE68A"/>
+                <stop offset=".48" stop-color="#F59E0B"/>
+                <stop offset="1" stop-color="#8A5A08"/>
+              </linearGradient>
+            </defs>
+            <circle cx="48" cy="48" r="37" fill="none" stroke="#F59E0B" stroke-width="1.8" opacity=".58"/>
+            <path d="M22 71 48 14l26 57-12-7-14-31-14 31-12 7Z" fill="url(#p-g)"/>
+            <path d="M17 57c8-11 19-17 31-17s23 6 31 17c-8 11-19 17-31 17S25 68 17 57Z" fill="#07182D" stroke="url(#p-g)" stroke-width="5" stroke-linejoin="round"/>
+            <circle cx="48" cy="57" r="13" fill="#07182D" stroke="url(#p-g)" stroke-width="5"/>
+            <circle cx="54" cy="50" r="4.2" fill="#fff"/>
+            <circle cx="48" cy="10" r="3.4" fill="#FDE68A"/>
+            <circle cx="24" cy="25" r="3.2" fill="#F8C873"/>
+            <circle cx="72" cy="25" r="3.2" fill="#F8C873"/>
+          </svg>
+        </div>
+        <div>
+          <h1>ARGOS</h1>
+          <p>Plano de negocios AtlasNex.</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#sumario">Sumario executivo</a>
+        <a href="#mercado">Mercado</a>
+        <a href="#cliente">Cliente ideal</a>
+        <a href="#produto">Produto</a>
+        <a href="#modelo">Modelo comercial</a>
+        <a href="#go-to-market">Go-to-market</a>
+        <a href="#financeiro">Projecao financeira</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#riscos">Riscos</a>
+        <a href="#metricas">Metricas</a>
+      </nav>
+
+      <div class="sidebar-card">
+        <span>Objetivo</span>
+        <strong>Validar e vender</strong>
+        <small>Plano para transformar o MVP em produto GovTech recorrente.</small>
+      </div>
+    </aside>
+
+    <main>
+      <header class="hero" id="sumario">
+        <div>
+          <span class="eyebrow">AtlasNex GovTech</span>
+          <h2>Plano de negocios do ARGOS</h2>
+          <p>
+            Estrategia para posicionar o ARGOS como inteligencia documental para elaboracao,
+            revisao e padronizacao de documentos da Lei 14.133/2021, com foco inicial em ETP e
+            Termo de Referencia.
+          </p>
+          <div class="badges">
+            <span class="badge">SaaS GovTech</span>
+            <span class="badge">Licitação pública</span>
+            <span class="badge">IA com revisão humana</span>
+            <span class="badge">Receita recorrente</span>
+          </div>
+          <div class="button-row">
+            <a class="button" href="#modelo">Ver modelo comercial</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="unit-metrics">
+            <div class="metric">
+              <div>
+                <span>Oferta inicial</span>
+                <strong>MVP Lite</strong>
+              </div>
+            </div>
+            <div class="metric">
+              <div>
+                <span>Ticket alvo mensal</span>
+                <strong>R$ 497-1.497</strong>
+              </div>
+            </div>
+            <div class="metric">
+              <div>
+                <span>Primeiro nicho</span>
+                <strong>Municípios</strong>
+              </div>
+            </div>
+            <div class="metric">
+              <div>
+                <span>Meta inicial</span>
+                <strong>10 pilotos</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Tese</span>
+            <h2>Resumo executivo</h2>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <strong>Problema</strong>
+            <span>
+              Equipes públicas precisam produzir documentos preparatórios com alta responsabilidade
+              jurídica, pouco tempo, dados dispersos e baixa padronização.
+            </span>
+          </article>
+          <article class="card">
+            <strong>Solução</strong>
+            <span>
+              O ARGOS coleta dados essenciais, gera minutas estruturadas por IA, permite
+              revisão humana e exporta DOCX institucional.
+            </span>
+          </article>
+          <article class="card">
+            <strong>Oportunidade</strong>
+            <span>
+              A Lei 14.133/2021 aumentou a exigência de planejamento. Órgãos pequenos e médios
+              tendem a precisar de ferramentas simples, guiadas e acessíveis.
+            </span>
+          </article>
+        </div>
+
+        <div class="highlight" style="margin-top: 16px;">
+          Posicionamento recomendado: “ARGOS, a inteligencia documental da AtlasNex para acelerar minutas
+          de ETP e Termo de Referência com clareza, segurança operacional e revisão humana obrigatória.”
+        </div>
+      </section>
+
+      <section class="section" id="mercado">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Mercado</span>
+            <h2>Contexto e oportunidade</h2>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <p>
+              O mercado inicial mais promissor é formado por prefeituras, câmaras, autarquias,
+              fundações e consórcios públicos que precisam se adequar à Lei 14.133/2021, mas não
+              possuem equipe grande de planejamento, jurídico e compras.
+            </p>
+            <p>
+              A dor não é apenas “gerar texto”. A dor real é transformar informações incompletas em
+              uma minuta minimamente organizada, rastreável e revisável, reduzindo retrabalho entre
+              área requisitante, compras, jurídico e controle interno.
+            </p>
+          </div>
+
+          <div class="chart" aria-label="Priorizacao de segmentos">
+            <h3>Segmentos prioritários</h3>
+            <div class="bar-row">
+              <span>Prefeituras pequenas</span>
+              <div class="bar-bg"><div class="bar" style="width: 92%;"></div></div>
+              <strong>Alta</strong>
+            </div>
+            <div class="bar-row">
+              <span>Autarquias</span>
+              <div class="bar-bg"><div class="bar" style="width: 78%;"></div></div>
+              <strong>Alta</strong>
+            </div>
+            <div class="bar-row">
+              <span>Consultorias</span>
+              <div class="bar-bg"><div class="bar" style="width: 74%;"></div></div>
+              <strong>Média</strong>
+            </div>
+            <div class="bar-row">
+              <span>Estados</span>
+              <div class="bar-bg"><div class="bar" style="width: 48%;"></div></div>
+              <strong>Futuro</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="cliente">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">ICP</span>
+            <h2>Cliente ideal e compradores</h2>
+          </div>
+        </div>
+
+        <div class="grid-4">
+          <article class="card">
+            <div class="number">1</div>
+            <strong>Prefeitura pequena ou média</strong>
+            <span>Órgão com equipe enxuta, alto volume de demandas e necessidade de padronização.</span>
+          </article>
+          <article class="card">
+            <div class="number">2</div>
+            <strong>Setor de compras</strong>
+            <span>Usuário diário, interessado em velocidade, organização e menos retrabalho.</span>
+          </article>
+          <article class="card">
+            <div class="number">3</div>
+            <strong>Controle interno/jurídico</strong>
+            <span>Influenciador técnico, interessado em consistência e revisão especializada.</span>
+          </article>
+          <article class="card">
+            <div class="number">4</div>
+            <strong>Secretário ou gestor</strong>
+            <span>Comprador econômico, interessado em produtividade e redução de riscos administrativos.</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="produto">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Produto</span>
+            <h2>Proposta de valor</h2>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Valor entregue</th>
+                <th>Como o MVP entrega</th>
+                <th>Prova em demonstração</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Redução de tempo</td>
+                <td>Geração de minuta inicial de ETP/TR a partir de formulário guiado.</td>
+                <td>Cadastrar um processo e gerar documento durante a reunião.</td>
+              </tr>
+              <tr>
+                <td>Padronização</td>
+                <td>Prompts com estrutura fixa baseada em seções essenciais da Lei 14.133/2021.</td>
+                <td>Mostrar ETP com 14 seções e TR com 14 seções.</td>
+              </tr>
+              <tr>
+                <td>Revisão humana</td>
+                <td>Editor no navegador e aviso explícito de validação especializada.</td>
+                <td>Editar um parágrafo, salvar revisão e exportar DOCX.</td>
+              </tr>
+              <tr>
+                <td>Baixa barreira técnica</td>
+                <td>Interface simples, dashboard, status e exportação em Word.</td>
+                <td>Fluxo completo sem treinamento longo.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="modelo">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Receita</span>
+            <h2>Modelo comercial sugerido</h2>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <strong>Lite</strong>
+            <span>Para validação e órgãos pequenos.</span>
+            <h3>R$ 497/mês</h3>
+            <ul>
+              <li>Até 3 usuários</li>
+              <li>ETP e TR</li>
+              <li>Exportação DOCX</li>
+              <li>Suporte básico</li>
+            </ul>
+          </article>
+          <article class="card">
+            <strong>Profissional</strong>
+            <span>Plano recomendado para prefeituras médias.</span>
+            <h3>R$ 997/mês</h3>
+            <ul>
+              <li>Até 10 usuários</li>
+              <li>Modelos institucionais</li>
+              <li>Histórico de versões</li>
+              <li>Suporte prioritário</li>
+            </ul>
+          </article>
+          <article class="card">
+            <strong>Institucional</strong>
+            <span>Para órgãos maiores e consultorias.</span>
+            <h3>R$ 1.497+/mês</h3>
+            <ul>
+              <li>Usuários ampliados</li>
+              <li>Biblioteca de documentos</li>
+              <li>Auditoria e perfis</li>
+              <li>Implantação assistida</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="highlight" style="margin-top: 16px;">
+          Estratégia recomendada: vender os primeiros contratos como “piloto assistido de 60 dias”,
+          com preço promocional e compromisso de feedback. O objetivo inicial é aprender, gerar casos
+          reais e transformar 3 a 5 pilotos em depoimentos.
+        </div>
+      </section>
+
+      <section class="section" id="go-to-market">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Vendas</span>
+            <h2>Plano go-to-market</h2>
+          </div>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline-card">
+            <span class="pill">Semana 1</span>
+            <h3>Demo guiada</h3>
+            <p>Apresentar para 5 contatos qualificados em compras públicas e coletar objeções.</p>
+          </article>
+          <article class="timeline-card">
+            <span class="pill">Semanas 2-3</span>
+            <h3>Pilotos</h3>
+            <p>Fechar 3 pilotos com órgãos ou consultorias que tenham processos reais para testar.</p>
+          </article>
+          <article class="timeline-card">
+            <span class="pill">Mês 2</span>
+            <h3>Prova social</h3>
+            <p>Documentar redução de tempo, exemplos de minutas e depoimentos dos primeiros usuários.</p>
+          </article>
+          <article class="timeline-card">
+            <span class="pill">Mês 3</span>
+            <h3>Oferta recorrente</h3>
+            <p>Converter pilotos em assinatura e abrir agenda para novas prefeituras.</p>
+          </article>
+        </div>
+
+        <div class="grid-2" style="margin-top: 16px;">
+          <div class="success">
+            Canais prioritários: rede de servidores de compras, consultorias municipais, eventos de
+            licitação, LinkedIn institucional, indicações e demonstrações individuais.
+          </div>
+          <div class="highlight">
+            Argumento central: não vender “IA genérica”, mas sim padronização e produtividade em
+            documentos preparatórios com revisão humana obrigatória.
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="financeiro">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Finanças</span>
+            <h2>Projeção financeira inicial</h2>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cenário</th>
+                <th>Clientes</th>
+                <th>Ticket médio mensal</th>
+                <th>MRR estimado</th>
+                <th>Objetivo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Validação</td>
+                <td>3</td>
+                <td>R$ 497</td>
+                <td>R$ 1.491</td>
+                <td>Provar uso real e ajustar produto.</td>
+              </tr>
+              <tr>
+                <td>Tração inicial</td>
+                <td>10</td>
+                <td>R$ 797</td>
+                <td>R$ 7.970</td>
+                <td>Validar recorrência e suporte.</td>
+              </tr>
+              <tr>
+                <td>Operação sustentável</td>
+                <td>30</td>
+                <td>R$ 997</td>
+                <td>R$ 29.910</td>
+                <td>Financiar evolução técnica e comercial.</td>
+              </tr>
+              <tr>
+                <td>Escala regional</td>
+                <td>100</td>
+                <td>R$ 997</td>
+                <td>R$ 99.700</td>
+                <td>Consolidar produto GovTech vertical.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid-3" style="margin-top: 16px;">
+          <article class="card">
+            <strong>Custos variáveis</strong>
+            <span>Uso de IA por documento, infraestrutura, armazenamento e suporte.</span>
+          </article>
+          <article class="card">
+            <strong>Custos fixos</strong>
+            <span>Desenvolvimento, manutenção, comercial, jurídico, contabilidade e atendimento.</span>
+          </article>
+          <article class="card">
+            <strong>Margem esperada</strong>
+            <span>Alta se houver controle de tokens, limites por plano e onboarding padronizado.</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="roadmap">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Evolução</span>
+            <h2>Roadmap de produto</h2>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card">
+            <strong>0-30 dias</strong>
+            <span>MVP comercial, pilotos, correções de UX, modelos por tipo de contratação e logs de uso.</span>
+          </article>
+          <article class="card">
+            <strong>31-90 dias</strong>
+            <span>Usuários/perfis, histórico de versões, biblioteca de modelos, painel de prompts e trilha de auditoria.</span>
+          </article>
+          <article class="card">
+            <strong>90+ dias</strong>
+            <span>Pesquisa de preços, mapa de riscos, integração com processos, parecer assistido e PostgreSQL multiusuário.</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="riscos">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Riscos</span>
+            <h2>Riscos e mitigação</h2>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Risco</th>
+                <th>Impacto</th>
+                <th>Mitigação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Uso indevido sem revisão</td>
+                <td>Alto</td>
+                <td>Aviso explícito, workflow de revisão e termos comerciais deixando claro que é minuta de apoio.</td>
+              </tr>
+              <tr>
+                <td>Alucinação da IA</td>
+                <td>Alto</td>
+                <td>Prompts restritivos, campos “A preencher”, revisão humana e validações por checklist.</td>
+              </tr>
+              <tr>
+                <td>Custo de IA elevado</td>
+                <td>Médio</td>
+                <td>Limites por plano, modelos baratos para tarefas simples e OpenRouter para roteamento flexível.</td>
+              </tr>
+              <tr>
+                <td>Venda longa ao setor público</td>
+                <td>Médio</td>
+                <td>Começar por pilotos, consultorias, contratação direta quando cabível e tickets acessíveis.</td>
+              </tr>
+              <tr>
+                <td>Concorrentes genéricos</td>
+                <td>Médio</td>
+                <td>Especialização em Lei 14.133/2021, templates, fluxo de compras públicas e experiência institucional.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="risk" style="margin-top: 16px;">
+          O produto não deve ser posicionado como substituto de jurídico, controle interno ou parecer
+          técnico. A promessa comercial correta é produtividade com revisão especializada.
+        </div>
+      </section>
+
+      <section class="section" id="metricas">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">Gestão</span>
+            <h2>Métricas de sucesso</h2>
+          </div>
+        </div>
+
+        <div class="grid-4">
+          <article class="card">
+            <strong>Ativação</strong>
+            <span>Percentual de clientes que cadastram processo e geram primeiro DOCX em até 7 dias.</span>
+          </article>
+          <article class="card">
+            <strong>Uso recorrente</strong>
+            <span>Quantidade de processos e documentos gerados por cliente por mês.</span>
+          </article>
+          <article class="card">
+            <strong>Conversão</strong>
+            <span>Taxa de pilotos convertidos em assinatura paga.</span>
+          </article>
+          <article class="card">
+            <strong>Retenção</strong>
+            <span>Clientes ativos após 90 dias, churn e motivo de cancelamento.</span>
+          </article>
+        </div>
+
+        <div class="grid-2" style="margin-top: 16px;">
+          <ul class="checklist">
+            <li>Meta de 30 dias: 5 demonstrações e 3 pilotos ativos.</li>
+            <li>Meta de 60 dias: 10 pilotos ou clientes em negociação.</li>
+            <li>Meta de 90 dias: 5 assinaturas pagas recorrentes.</li>
+            <li>Meta de produto: gerar ETP/TR com menos retrabalho percebido pelo usuário.</li>
+          </ul>
+          <div class="success">
+            O sinal mais importante no começo não é escala: é usuário real voltando para gerar outro
+            documento. Recorrência de uso vem antes de recorrência financeira robusta.
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        ARGOS | AtlasNex GovTech | Plano de negócios do produto
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
