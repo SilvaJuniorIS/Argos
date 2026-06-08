@@ -599,6 +599,61 @@ body {
   resize: vertical;
 }
 
+.lite-choice-group {
+  border: 0;
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.lite-choice-group legend {
+  color: #28435f;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.lite-segmented {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.lite-segmented label {
+  border: 1px solid #cbd8e6;
+  border-radius: 8px;
+  background: #ffffff;
+  cursor: pointer;
+  display: grid;
+  gap: 4px;
+  min-height: 70px;
+  padding: 12px 14px;
+}
+
+.lite-segmented label.active {
+  border-color: #f59e0b;
+  background: #fffbeb;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.14);
+}
+
+.lite-segmented input {
+  height: 1px;
+  opacity: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.lite-segmented strong {
+  color: #0a2342;
+  font-size: 15px;
+}
+
+.lite-segmented span {
+  color: #5f748b;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .lite-form input:focus,
 .lite-form select:focus,
 .lite-form textarea:focus {

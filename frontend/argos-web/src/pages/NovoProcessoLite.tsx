@@ -313,6 +313,29 @@ export default function NovoProcessoLite() {
           </div>
 
           <form className="lite-form" onSubmit={handleSubmit} noValidate>
+            <fieldset className="lite-choice-group">
+              <legend>Documento a gerar</legend>
+              <div className="lite-segmented" role="radiogroup" aria-label="Documento a gerar">
+                {(['ETP', 'TR'] as const).map((tipo) => (
+                  <label key={tipo} className={form.tipo_documento === tipo ? 'active' : ''}>
+                    <input
+                      type="radio"
+                      name="tipo_documento"
+                      value={tipo}
+                      checked={form.tipo_documento === tipo}
+                      onChange={() => updateField('tipo_documento', tipo)}
+                    />
+                    <strong>{tipo}</strong>
+                    <span>
+                      {tipo === 'ETP'
+                        ? 'Estudo Tecnico Preliminar'
+                        : 'Termo de Referencia'}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
             <label>
               Objeto da contratacao
               <textarea
