@@ -121,7 +121,7 @@ LLM_TIMEOUT_SECONDS=45
 
 OPENROUTER_API_KEY=sk-or-sua-chave
 OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
-OPENROUTER_DEFAULT_MODEL=openrouter/auto
+OPENROUTER_DEFAULT_MODEL=openrouter/free
 OPENROUTER_HTTP_REFERER=http://localhost:5175
 OPENROUTER_X_TITLE=ARGOS
 ```
@@ -197,7 +197,7 @@ LLM_FALLBACK_PROVIDER=
 LLM_TIMEOUT_SECONDS=45
 OPENROUTER_API_KEY=sk-or-sua-chave
 OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
-OPENROUTER_DEFAULT_MODEL=openrouter/auto
+OPENROUTER_DEFAULT_MODEL=openrouter/free
 OPENROUTER_HTTP_REFERER=https://sua-url-frontend.onrender.com
 OPENROUTER_X_TITLE=ARGOS
 ```
@@ -206,7 +206,7 @@ Troca de provedor/modelo:
 
 - OpenRouter principal: `LLM_PROVIDER=openrouter`
 - Sem fallback: deixe `LLM_FALLBACK_PROVIDER` vazio
-- Modelo padrao OpenRouter: `OPENROUTER_DEFAULT_MODEL=openrouter/auto`
+- Modelo padrao OpenRouter: `OPENROUTER_DEFAULT_MODEL=openrouter/free`
 
 O roteamento por tipo de tarefa fica em `backend/app/services/llm_gateway/llm_config.py`. As minutas juridicas usam a tarefa `legal_draft`, que pode apontar para modelos mais fortes no OpenRouter sem alterar a regra de negocio.
 

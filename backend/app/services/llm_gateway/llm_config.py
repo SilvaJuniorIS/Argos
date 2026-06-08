@@ -1,8 +1,8 @@
 LLM_TASK_MODELS = {
-    "chat": "openrouter/auto",
-    "summary": "google/gemini-2.5-flash",
-    "document_analysis": "google/gemini-2.5-pro",
-    "legal_draft": "anthropic/claude-sonnet-4",
+    "chat": "openrouter/free",
+    "summary": "openrouter/free",
+    "document_analysis": "openrouter/free",
+    "legal_draft": "openrouter/free",
     "fallback": "openai/gpt-4o-mini",
 }
 

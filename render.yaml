@@ -54,7 +54,7 @@
       - key: OPENROUTER_BASE_URL
         value: https://openrouter.ai/api/v1
       - key: OPENROUTER_DEFAULT_MODEL
-        value: openrouter/auto
+        value: openrouter/free
       - key: OPENROUTER_HTTP_REFERER
         sync: false
       - key: OPENROUTER_X_TITLE

@@ -1046,28 +1046,25 @@ npm run dev</div>
 
         <div class="grid-2">
           <article class="step-card">
-            <strong>OpenRouter como principal</strong>
-            <span>Configuracao recomendada para o MVP por ser compativel com Chat Completions.</span>
+            <strong>OpenRouter gratuito como principal</strong>
+            <span>Configuracao recomendada para o MVP, usando o roteador gratuito do OpenRouter.</span>
             <div class="code">LLM_PROVIDER=openrouter
-LLM_FALLBACK_PROVIDER=openai
+LLM_FALLBACK_PROVIDER=
 LLM_TIMEOUT_SECONDS=45
 OPENROUTER_API_KEY=sk-or-sua-chave
 OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
-OPENROUTER_DEFAULT_MODEL=openrouter/auto
+OPENROUTER_DEFAULT_MODEL=openrouter/free
 OPENROUTER_HTTP_REFERER=http://localhost:5175
-OPENROUTER_X_TITLE=ARGOS
-OPENAI_API_KEY=sk-sua-chave-opcional
-OPENAI_DEFAULT_MODEL=gpt-4o-mini</div>
+OPENROUTER_X_TITLE=ARGOS</div>
           </article>
 
           <article class="step-card">
-            <strong>OpenAI como unico provedor</strong>
-            <span>Use se quiser operar sem OpenRouter no momento.</span>
-            <div class="code">LLM_PROVIDER=openai
-LLM_FALLBACK_PROVIDER=
-OPENAI_API_KEY=sk-sua-chave
-OPENAI_DEFAULT_MODEL=gpt-4o-mini
-OPENAI_TIMEOUT_SECONDS=45</div>
+            <strong>Chave obrigatoria</strong>
+            <span>Mesmo usando modelo gratuito, o backend precisa da chave do OpenRouter.</span>
+            <div class="code">1. Acesse https://openrouter.ai/keys
+2. Crie uma chave de API
+3. Preencha OPENROUTER_API_KEY no .env do backend
+4. Reinicie a API</div>
           </article>
         </div>
 
@@ -1089,17 +1086,12 @@ OPENAI_TIMEOUT_SECONDS=45</div>
               <tr>
                 <td>LLM_FALLBACK_PROVIDER</td>
                 <td>Define o provedor usado se o principal falhar.</td>
-                <td>openai</td>
+                <td>vazio no MVP</td>
               </tr>
               <tr>
                 <td>OPENROUTER_DEFAULT_MODEL</td>
                 <td>Modelo padrao no OpenRouter.</td>
-                <td>openrouter/auto</td>
-              </tr>
-              <tr>
-                <td>OPENAI_DEFAULT_MODEL</td>
-                <td>Modelo padrao no provedor OpenAI.</td>
-                <td>gpt-4o-mini</td>
+                <td>openrouter/free</td>
               </tr>
             </tbody>
           </table>
@@ -1210,7 +1202,7 @@ VITE_API_URL=https://sua-url-backend.onrender.com</div>
               <tr>
                 <td>Erro ao gerar documento</td>
                 <td>Chave IA ausente, invalida ou provedor indisponivel.</td>
-                <td>Revise `OPENROUTER_API_KEY`, `OPENAI_API_KEY`, `LLM_PROVIDER` e logs do backend.</td>
+                <td>Revise `OPENROUTER_API_KEY`, `LLM_PROVIDER` e logs do backend.</td>
               </tr>
               <tr>
                 <td>CORS bloqueando requisicoes</td>

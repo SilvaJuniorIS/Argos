@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     llm_timeout_seconds: float = 45.0
     openrouter_api_key: str = ""
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
-    openrouter_default_model: str = "openrouter/auto"
+    openrouter_default_model: str = "openrouter/free"
     openrouter_http_referer: str = ""
     openrouter_x_title: str = "ARGOS"
     openai_api_key: str = ""

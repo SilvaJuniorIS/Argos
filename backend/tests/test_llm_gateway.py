@@ -14,10 +14,10 @@ from app.services.llm_gateway.types import (
 def test_openrouter_provider_normaliza_resposta(monkeypatch) -> None:
     provider = OpenRouterProvider()
     provider.api_key = "sk-or-test"
-    provider.default_model = "openrouter/auto"
+    provider.default_model = "openrouter/free"
 
     response = SimpleNamespace(
-        model="openrouter/auto",
+        model="openrouter/free",
         usage=SimpleNamespace(model_dump=lambda: {"total_tokens": 12}),
         choices=[SimpleNamespace(message=SimpleNamespace(content=" Texto gerado "))],
         model_dump=lambda: {"id": "chatcmpl-test"},
@@ -38,7 +38,7 @@ def test_openrouter_provider_normaliza_resposta(monkeypatch) -> None:
     )
 
     assert result.content == "Texto gerado"
-    assert result.model == "openrouter/auto"
+    assert result.model == "openrouter/free"
     assert result.provider == "openrouter"
     assert result.usage == {"total_tokens": 12}
     assert result.raw_response == {"id": "chatcmpl-test"}
